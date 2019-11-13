@@ -48,8 +48,6 @@ class TaskFighterController extends Controller
             });
         }
 
-        
-
         return response()->json(['message' => $message]);
     }
 }
