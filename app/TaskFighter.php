@@ -2,7 +2,9 @@
 
 namespace App;
 
-class TaskFighter
+use Illuminate\Database\Eloquent\Model;
+
+class TaskFighter extends Model
 {
     public $name;
 
@@ -10,15 +12,16 @@ class TaskFighter
 
     public $dueIn;
 
-    public function __construct($name, $priority, $due_in)
-    {
-        $this->name = $name;
-        $this->priority = $priority;
-        $this->dueIn = $due_in;
-    }
+    protected $table = 'tasks';
+
 
     public static function of($name, $priority, $dueIn) {
-        return new static($name, $priority, $dueIn);
+        $task = new static;
+        $task->name = $name;
+        $task->priority = $priority;
+        $task->dueIn = $dueIn;
+
+        return $task;
     }
 
     public function tick()
