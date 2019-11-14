@@ -2,7 +2,12 @@
 
 namespace App;
 
+use App\Ticker\DefaultStrategy;
+use App\Ticker\NegativeStrategy;
+use App\Ticker\PositiveStrategy;
+use App\Ticker\Ticker;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class TaskFighter extends Model
 {
@@ -14,8 +19,8 @@ class TaskFighter extends Model
 
     protected $table = 'tasks';
 
-
-    public static function of($name, $priority, $dueIn) {
+    public static function of($name, $priority, $dueIn)
+    {
         $task = new static;
         $task->name = $name;
         $task->priority = $priority;
@@ -26,48 +31,23 @@ class TaskFighter extends Model
 
     public function tick()
     {
-        if ($this->name != 'Get Older') {
-            if ($this->priority < 100) {
-                if ($this->name != 'Spin the World') {
-                    $this->priority = $this->priority + 1;
-                }
+        $ticker = new Ticker;
+
+        $task = Str::snake($this->name);
+
+        if($task !== 'spin_the_world') {
+
+            if($task === 'complete_assessment') {
+                $ticker->setStrategy(new PositiveStrategy);
             }
-            if ($this->name == 'Complete Assessment') {
-                if ($this->dueIn < 11) {
-                    if ($this->priority < 100) {
-                        $this->priority = $this->priority + 1;
-                    }
-                }
-                if ($this->dueIn < 6) {
-                    if ($this->priority < 100) {
-                        $this->priority = $this->priority + 1;
-                    }
-                }
+            else if($task === 'get_older') {
+                $ticker->setStrategy(new NegativeStrategy);
             }
-        } else {
-            if ($this->priority > 0) {
-                $this->priority = $this->priority - 1;
+            else {
+                $ticker->setStrategy(new DefaultStrategy);
             }
         }
-        if ($this->name != 'Spin the World') {
-            $this->dueIn = $this->dueIn - 1;
-        }
-        if ($this->dueIn < 0) {
-            if ($this->name != 'Get Older') {
-                if ($this->name != 'Complete Assessment') {
-                    if ($this->priority < 100) {
-                        if ($this->name != 'Spin the World') {
-                            $this->priority = $this->priority + 1;
-                        }
-                    }
-                } else {
-                    $this->priority = $this->priority - $this->priority;
-                }
-            } else {
-                if ($this->priority > 0) {
-                    $this->priority = $this->priority - 1;
-                }
-            }
-        }
+
+        $ticker->tick($this);
     }
 }
