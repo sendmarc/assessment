@@ -11,13 +11,8 @@ use Illuminate\Support\Str;
 
 class TaskFighter extends Model
 {
-    public $name;
-
-    public $priority;
-
-    public $dueIn;
-
     protected $table = 'tasks';
+    protected $fillable = ['name', 'priority', 'dueIn'];
 
     public static function of($name, $priority, $dueIn)
     {

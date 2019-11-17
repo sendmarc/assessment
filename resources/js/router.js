@@ -10,10 +10,12 @@ export default new Router({
     routes: [
         {
             path: '/',
-            component: TaskList
+            component: TaskList,
+            name: 'task.list'
         },
         {
             path: '/create-task',
+            name: 'task.create',
             component: CreateTask
         }
     ]

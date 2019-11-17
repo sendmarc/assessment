@@ -19,6 +19,8 @@ class Ticker
 
     public function tick(TaskFighter $task)
     {
+        $task->dueIn = $task->dueIn - 1;
+        
         if($this->strategy) {
             $this->strategy->apply($task);
             $this->validatePriority($task);

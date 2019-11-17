@@ -24,7 +24,9 @@ class CreateTaskRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|min:3',
+            'priority' => 'required|numeric|min:1|max:100',
+            'dueIn' => 'required|numeric|min:1'
         ];
     }
 }

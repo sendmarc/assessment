@@ -31,6 +31,9 @@ import router from './router'
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+ Vue.component('app-alert', require('./components/Alert.vue').default)
+
+
 const app = new Vue({
     el: '#app',
     router: router,

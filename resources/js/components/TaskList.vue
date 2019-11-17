@@ -1,46 +1,54 @@
 <template>
   <div>
-    <h5 class="my-4">List</h5>
+     <h5 class="my-4">List</h5>
 
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th class="cursor-pointer" @click="sortBy('id')">Id</th>
-          <th class="cursor-pointer" @click="sortBy('name')">Name</th>
-          <th class="cursor-pointer" @click="sortBy('priority')">Priority</th>
-          <th class="cursor-pointer" @click="sortBy('dueIn')">Due In</th>
-        </tr>
-      </thead>
+      <div class="button-group my-5">
+        <a href="#" class="btn btn-sm btn-success" @click="tick">Tick</a>
+        <router-link :to="{name: 'task.create'}" href="#" class="btn btn-sm btn-primary">Create a task</router-link>
+      </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th class="cursor-pointer" @click="sortBy('id')">Id</th>
+            <th class="cursor-pointer" @click="sortBy('name')">Name</th>
+            <th class="cursor-pointer" @click="sortBy('priority')">Priority</th>
+            <th class="cursor-pointer" @click="sortBy('dueIn')">Due In</th>
+          </tr>
+        </thead>
 
-      <tbody>
-        <tr v-for="task in sortedTasks" :key="task.id">
-          <td>{{ task.id }}</td>
-          <td>{{ task.name }}</td>
-          <td>{{ task.priority }}</td>
-          <td>{{ task.dueIn }}</td>
-        </tr>
-      </tbody>
-    </table>
+        <tbody>
+          <tr v-for="task in sortedTasks" :key="task.id">
+            <td>{{ task.id }}</td>
+            <td>{{ task.name }}</td>
+            <td>{{ task.priority }}</td>
+            <td>{{ task.dueIn }}</td>
+          </tr>
+        </tbody>
+      </table>
   </div>
 </template>
 
 <script>
 export default {
-
   computed: {
-      sortedTasks() {
-          let tasks = this.tasks
-          if(this.sort.column) {
-              tasks =_.orderBy(tasks, (task) => {
-                  return task[this.sort.column]
-              }, this.sort.order)
-          }
-
-          return tasks
+    sortedTasks() {
+      let tasks = this.tasks;
+      if (this.sort.column) {
+        tasks = _.orderBy(
+          tasks,
+          task => {
+            return task[this.sort.column];
+          },
+          this.sort.order
+        );
       }
+
+      return tasks;
+    }
   },
   data() {
     return {
+      loading: false,
       sort: {
         column: "id",
         order: "asc"
@@ -51,22 +59,35 @@ export default {
 
   methods: {
     sortBy(column) {
-        this.sort.column = column
-        this.sort.order = this.sort.order === 'asc' ? 'desc': 'asc';
+      this.sort.column = column;
+      this.sort.order = this.sort.order === "asc" ? "desc" : "asc";
+    },
+
+    async tick() {
+      await axios.get('/tasks/tick')
+      await this.getTasks()
+    },
+
+    async getTasks() {
+      try {
+
+        const {
+          data: { data }
+        } = await axios.get("/tasks");
+        this.tasks = data;
+      } catch (e) {}
+
     }
   },
 
-  async mounted() {
-    try {
-      const {
-        data: { data }
-      } = await axios.get("/tasks");
-      this.tasks = data;
-    } catch (e) {}
+  async created() {
+    await this.getTasks()
   }
 };
 </script>
 
 <style scoped>
-    .cursor-pointer { cursor: pointer; }
+.cursor-pointer {
+  cursor: pointer;
+}
 </style>
