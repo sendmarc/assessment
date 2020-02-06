@@ -30,6 +30,13 @@ Bonus points are awarded for the following, optional, tasks:
 3. Any additional usability features.
 2. Ensuring robustness of the application for use in the wild.
 
+## Notes
+
+_Important: this evaluation is purposely developed to be rudamentary, it's in your interest to change the code in `routes/web.php` and `app/TaskFighter.php` to implement best practice in web application development._
+
+* The code to pay attention to is in `routes/web.php` and `app/TaskFighter.php`.
+* Going to the root URL in your browser will result in a 404 error. Take a look at the routes and you'll see why.
+
 ## Rules
 
 Hi and welcome to team TaskFighter. As you know, we build a small application to help people manage their tasks. 
