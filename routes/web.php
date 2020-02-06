@@ -11,6 +11,10 @@
 |
 */
 
+Route::get('/', function() {
+    return redirect('/tasks');
+});
+
 Route::get('/tasks', function () {
     $tasks = DB::table('tasks')->select('*')->get();
     return $tasks;
