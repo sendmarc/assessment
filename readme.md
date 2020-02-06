@@ -32,10 +32,10 @@ Bonus points are awarded for the following, optional, tasks:
 
 ## Notes
 
-_Important: this evaluation is purposely developed to be rudamentary, it's in your interest to change the code in `routes/web.php` and `app/TaskFighter.php` to implement best practice in web application development._
+_Important: this evaluation is purposely developed to be rudimentary (this is not how we code at Sendmarc)._
 
 * The code to pay attention to is in `routes/web.php` and `app/TaskFighter.php`.
-* Going to the root URL in your browser will result in a 404 error. Take a look at the routes and you'll see why.
+* We want to see best practice in web application & software development principles.
 
 ## Rules
 
@@ -55,7 +55,7 @@ Pretty simple, right? Well this is where it gets interesting:
 - The priority of an item is never negative
 - "Get Older" actually decreases in priority the older it gets
 - The priority of an item is never more than 100
-- "Spin the World", being something that just happens, never has to be completed or increase in priority
-- "Complete Assessment", like "Get Older, increases in priority as it's dueIn value approaches; Priority increases by 2 when there are 10 days or less and by 3 when there are 5 days or less but priority drops to 0 after the due date.
+- "Breathe", being something that just happens, never has to be completed or increase in priority
+- "Complete Assessment" increases in priority as it's dueIn value approaches; Priority increases by 2 when there are 10 days or less and by 3 when there are 5 days or less but priority drops to 0 after the due date.
 
-Just for clarification, an item can never have its priority increase above 100 or below 0, however "Spin the World" is an automatic task and as such its priority is 1000 and it never alters.
+Just for clarification, an item can never have its priority increase above 100 or below 0, however "Breathe" is an automatic task and as such its priority is 1000 and it never alters.

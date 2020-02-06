@@ -25,7 +25,7 @@ class TaskFighter
     {
         if ($this->name != 'Get Older') {
             if ($this->priority < 100) {
-                if ($this->name != 'Spin the World') {
+                if ($this->name != 'Breathe') {
                     $this->priority = $this->priority + 1;
                 }
             }
@@ -46,14 +46,14 @@ class TaskFighter
                 $this->priority = $this->priority - 1;
             }
         }
-        if ($this->name != 'Spin the World') {
+        if ($this->name != 'Breathe') {
             $this->dueIn = $this->dueIn - 1;
         }
         if ($this->dueIn < 0) {
             if ($this->name != 'Get Older') {
                 if ($this->name != 'Complete Assessment') {
                     if ($this->priority < 100) {
-                        if ($this->name != 'Spin the World') {
+                        if ($this->name != 'Breathe') {
                             $this->priority = $this->priority + 1;
                         }
                     }

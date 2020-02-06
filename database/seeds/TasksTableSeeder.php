@@ -10,7 +10,7 @@ class TasksTableSeeder extends Seeder
     {
         DB::table('tasks')->insert([
             ['name' => 'Get Older', 'priority' => 50, 'dueIn' => 365],
-            ['name' => 'Spin the World', 'priority' => 1000, 'dueIn' => '30'],
+            ['name' => 'Breathe', 'priority' => 1000, 'dueIn' => '30'],
             ['name' => 'Complete Assessment', 'priority' => 50, 'dueIn' => 15],
         ]);
     }
