@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Task;
+
 class TaskFighter
 {
     public $name;
@@ -10,11 +12,11 @@ class TaskFighter
 
     public $dueIn;
 
-    public function __construct($name, $priority, $due_in)
+    public function __construct(Task $task)
     {
-        $this->name = $name;
-        $this->priority = $priority;
-        $this->dueIn = $due_in;
+        $this->name = $task->name;
+        $this->priority = $task->priority;
+        $this->dueIn = $task->dueIn;
     }
 
     public static function of($name, $priority, $dueIn) {
@@ -23,72 +25,43 @@ class TaskFighter
 
     public function tick()
     {
-        if ($this->name != 'Get Older') 
-        {
-            if ($this->priority < 100) 
-            {
-                if ($this->name != 'Breathe') 
-                {
-                    $this->priority = $this->priority + 1;
+        if ($this->name != 'Breathe')
+		{
+			if ($this->priority < 100) 
+			{
+				if ($this->name == 'Get Older')
+				{
+						$this->priority -= 1;
+				}
+				else if ($this->name == 'Complete Assessment') 
+				{
+					if ($this->dueIn <= 1) 
+					{
+						$this->priority = 0;
+					}
+					else if ($this->dueIn <= 5)
+					{
+						$this->priority += 3;
+					}
+					else if ($this->dueIn <= 10)
+					{
+						$this->priority += 2;
+					}
+					else 
+					{
+						$this->priority += 1;
+					}					
                 }
-            }
-            if ($this->name == 'Complete Assessment') 
-            {
-                if ($this->dueIn < 11) 
+                else
                 {
-                    if ($this->priority < 100) 
-                    {
-                        $this->priority = $this->priority + 1;
+                    $this->priority += 1;
+                    if ($this->dueIn <= 0)
+					{
+						$this->priority += 1;
                     }
                 }
-                if ($this->dueIn < 6) 
-                {
-                    if ($this->priority < 100) 
-                    {
-                        $this->priority = $this->priority + 1;
-                    }
-                }
             }
-        } 
-        else 
-        {
-            if ($this->priority > 0) 
-            {
-                $this->priority = $this->priority - 1;
-            }
-        }
-
-        if ($this->name != 'Breathe') 
-        {
-            $this->dueIn = $this->dueIn - 1;
-        }
-
-        if ($this->dueIn < 0) 
-        {
-            if ($this->name != 'Get Older') 
-            {
-                if ($this->name != 'Complete Assessment') 
-                {
-                    if ($this->priority < 100) 
-                    {
-                        if ($this->name != 'Breathe') 
-                        {
-                            $this->priority = $this->priority + 1;
-                        }
-                    }
-                } 
-                else 
-                {
-                    $this->priority = $this->priority - $this->priority;
-                }
-            } 
-            else 
-            {
-                if ($this->priority > 0) 
-                {
-                    $this->priority = $this->priority - 1;
-                }
-            }
-        }
+            $this->dueIn -= 1;
+		}
     }
 }

@@ -101,7 +101,7 @@ class TaskController extends Controller
         $tasks = Task::all();
         foreach($tasks as $task)
         {
-            $taskFighter = new TaskFighter($task->name, $task->priority, $task->dueIn);
+            $taskFighter = new TaskFighter($task);
             $taskFighter->tick();
             $task->priority = $taskFighter->priority;
             $task->dueIn = $taskFighter->dueIn;
