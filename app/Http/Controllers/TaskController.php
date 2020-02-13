@@ -107,6 +107,6 @@ class TaskController extends Controller
             $task->dueIn = $taskFighter->dueIn;
             $task->save();
         }
-        return 'tick';
+        return redirect()->back()->with('success', 'ticked!'); 
     }
 }
