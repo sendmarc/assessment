@@ -40,6 +40,6 @@
 //     return 'tick';
 // });
 
-Route::resource('tasks', 'TasksController')->only([
-    'index', 'show', 'store', 'update', 'destroy'
-]);
+Route::get('/{any}', function () {
+    return view('task');
+  })->where('any', '.*');
