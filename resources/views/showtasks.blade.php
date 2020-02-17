@@ -33,24 +33,6 @@
                 </table>
             </div>
         </div>
-
-        <script>
-            $('ticking').click(function(e){
-                e.preventDefault(); // Prevents default link action
-                $.ajax({
-                    url: $(this).attr('href'),
-                    success: function(data){
-                    // Do something
-                    console.log('ticked');
-                    }
-                });
-            });
-
-            function tick() {             
-                console.log('ticked');
-            }
-        </script>
-
     </body>
     
 </html>
