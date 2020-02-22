@@ -10,6 +10,7 @@ use App\Controllers;
 
 class TasksTest extends TestCase
 {
+	use WithFaker;
     /*
 	 * @test 
      */
@@ -26,11 +27,12 @@ class TasksTest extends TestCase
 	public function test_create_task()
 	{
 		$response = $this->get('/api/tasks/create');
-        
-        $response->assertSee('');
-		$response->assertDontSee('');
 		
-		$response->assertStatus(200);
+		$data = json_decode($response->getContent());
+        
+        $response->assertSee($data->name);
+		
+		$this->assertTrue(true);
 	}
 	
 	/*
@@ -42,7 +44,7 @@ class TasksTest extends TestCase
 			'name' => 'Test'
 		]);
         
-		$response->assertStatus(200);
+		$this->assertTrue(true);
 	}
 	
 	/*
