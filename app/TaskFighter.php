@@ -2,69 +2,52 @@
 
 namespace App;
 
+use App\Abstracts\TaskServiceAbstract;
+use App\Exceptions\TaskServiceAliasException;
+use App\Services\TaskTickService;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
+
+/**
+ * Class TaskFighter
+ *
+ * @package App
+ * @property string $name
+ * @property int $priority
+ * @property int $dueIn
+ */
+
 class TaskFighter
 {
     public $name;
+    public  $priority;
+    public  $dueIn;
 
-    public $priority;
-
-    public $dueIn;
-
-    public function __construct($name, $priority, $due_in)
+    public function __construct($name, $priority, $dueIn)
     {
         $this->name = $name;
         $this->priority = $priority;
-        $this->dueIn = $due_in;
+        $this->dueIn = $dueIn;
     }
 
-    public static function of($name, $priority, $dueIn) {
+    /**
+     * @param $name
+     * @param $priority
+     * @param $dueIn
+     *
+     * @return TaskFighter
+     */
+    public static function of($name, $priority, $dueIn): TaskFighter
+    {
         return new static($name, $priority, $dueIn);
     }
 
-    public function tick()
+    public function tick(): void
     {
-        if ($this->name != 'Get Older') {
-            if ($this->priority < 100) {
-                if ($this->name != 'Breathe') {
-                    $this->priority = $this->priority + 1;
-                }
-            }
-            if ($this->name == 'Complete Assessment') {
-                if ($this->dueIn < 11) {
-                    if ($this->priority < 100) {
-                        $this->priority = $this->priority + 1;
-                    }
-                }
-                if ($this->dueIn < 6) {
-                    if ($this->priority < 100) {
-                        $this->priority = $this->priority + 1;
-                    }
-                }
-            }
-        } else {
-            if ($this->priority > 0) {
-                $this->priority = $this->priority - 1;
-            }
-        }
-        if ($this->name != 'Breathe') {
-            $this->dueIn = $this->dueIn - 1;
-        }
-        if ($this->dueIn < 0) {
-            if ($this->name != 'Get Older') {
-                if ($this->name != 'Complete Assessment') {
-                    if ($this->priority < 100) {
-                        if ($this->name != 'Breathe') {
-                            $this->priority = $this->priority + 1;
-                        }
-                    }
-                } else {
-                    $this->priority = $this->priority - $this->priority;
-                }
-            } else {
-                if ($this->priority > 0) {
-                    $this->priority = $this->priority - 1;
-                }
-            }
-        }
+        $taskName = Str::studly($this->name);
+        /** @var TaskFighter $tickFighter */
+        $tickFighter = TaskTickService::getService($taskName, $this);
+        $this->priority  = $tickFighter->priority;
+        $this->dueIn  = $tickFighter->dueIn;
     }
 }
