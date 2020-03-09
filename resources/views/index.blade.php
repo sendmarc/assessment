@@ -9,9 +9,7 @@
     </head>
     <body>
         <div id="app">
-            <tasks-list :tasks="{{ $tasks }}">
-            </tasks-list>
-
+            <home/>
         </div>
     </body>
     <script src="{{ asset('/js/app.js') }}"></script>

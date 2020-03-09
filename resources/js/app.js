@@ -1,17 +1,15 @@
 import BootstrapVue from 'bootstrap-vue'
 import Vue from 'vue';
-import TasksList from './components/TasksList';
-import TaskRow from './components/TaskRow';
+import Home from './components/Home';
 import Navigation from './components/Navigation';
-import Thead from './components/Thead';
+import Form from './components/Form';
 require('./bootstrap');
 window.$ = require('jquery');
 
 Vue.use(BootstrapVue);
 
-Vue.component('tasks-list', TasksList);
-Vue.component('task-row', TaskRow);
-Vue.component('table-head', Thead);
+Vue.component('home', Home);
+Vue.component('Form', Form);
 Vue.component('navigation', Navigation);
 const app = new Vue({
     el: '#app',

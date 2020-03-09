@@ -3,78 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Tasks\CreateTask;
+use App\Http\Resources\TaskResource;
 use App\Models\Task;
 use App\TaskFighter;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\View\View;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class TaskController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Factory|View
-     */
-    public function index()
-    {
-        $tasks = Task::all();
 
-        return view('index', compact('tasks'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param CreateTask $request
-     *
-     * @return JsonResponse
-     */
-    public function store(CreateTask $request): JsonResponse
+    public function home()
     {
 
-        $task = new Task;
-        $task->name = $request->name;
-        $task->priority = $request->priority;
-        $task->dueIn = $request->dueIn;
-        $status =  $task->save();
-        if($status){
-            $message = 'Task Created';
-        }else{
-            $message = 'Task not created';
-        }
-
-        return \response()->json(['status' => $status, 'message' => $message, 'tasks' => Task::all()->toArray()]);
+        return view('index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     *
-     * @return string
-     */
-    public function destroy($id): string
-    {
-        try{
-            $task = Task::findOrFail($id);
-            $task->delete();
-            $status = true;
-            $message = 'Task Deleted';
-        }catch (ModelNotFoundException $e){
-            $status = false;
-            $message = $e->getMessage();
-        }
-
-        return response()->json(['status' => $status, 'message' => $message, 'tasks' => Task::all()->toArray()])->getContent();
-    }
-
-
-    public function tick(): string
+    public function tick(): AnonymousResourceCollection
     {
         $tasks = Task::all();
         $tasks->map(static function (Task $task){
@@ -88,6 +33,79 @@ class TaskController extends Controller
 
         });
 
-        return \response()->json(['status' => true, 'message' => 'Task ticked', 'tasks' => Task::all()])->getContent();
+        return $this->index();
     }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return AnonymousResourceCollection
+     */
+    public function index(): AnonymousResourceCollection
+    {
+        return TaskResource::collection(Task::all());
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param CreateTask $request
+     *
+     * @return TaskResource
+     */
+    public function store(CreateTask $request): TaskResource
+    {
+        $task = Task::create([
+                'name' => $request->name,
+                'priority' => $request->priority,
+                'dueIn' => $request->dueIn,
+            ]);
+        return new TaskResource($task);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param Task $task
+     *
+     * @return TaskResource
+     */
+    public function show(Task $task): TaskResource
+    {
+        return new TaskResource($task);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param Request $request
+     * @param Task    $task
+     *
+     * @return TaskResource
+     */
+    public function update(Request $request, Task $task): TaskResource
+    {
+        $task->update($request->only([
+            'name',
+            'priority',
+            'dueIn'
+        ]));
+
+        return new TaskResource($task);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param Task $task
+     *
+     * @return JsonResponse
+     * @throws \Exception
+     */
+    public function destroy(Task $task): JsonResponse
+    {
+        $task->delete();
+
+        return response()->json(null, 204);
+    }
+
 }

@@ -1,30 +1,9 @@
 <template>
-    <thead>
-    <tr class="border-bottom text-white">
-        <td class="border-right">Name</td>
-        <td class="text-center">Priority</td>
-        <td class="text-center">Due In</td>
-        <td class="task-input-half">&nbsp</td>
-    </tr>
-    <tr class="border-bottom border-top" v-if="!isHidden">
-        <td>
-            <input v-model="form.input.name" title="Task name" placeholder="Task Name?" name="name" type="text" class="form-control m-0">
-        </td>
-        <td class="task-input">
-            <input v-model="form.input.priority" title="Task priority" name="priority" type="number" class="form-control m-0">
-        </td>
-        <td class="task-input">
-            <input v-model="form.input.dueIn" title="Task due in" type="number" name="dueIn" class="form-control m-0">
-        </td>
-        <td class="task-input-half">
-            <button @click="addTask" class="btn btn-block btn-outline-success">Add</button>
-        </td>
-    </tr>
-    </thead>
+
 </template>
 <script>
     export default {
-        name : 'task-form-row',
+        name : 'Form',
         props: {isHidden : Boolean},
         methods : {
             async addTask(){
