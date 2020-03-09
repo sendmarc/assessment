@@ -28,6 +28,7 @@ final class TaskTickService{
     {
         $serviceToUse = Arr::get(self::$aliases, $taskName, DefaultTickService::class);
 
+
         return (new $serviceToUse($taskFighter))->taskFighter;
     }
 }

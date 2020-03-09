@@ -16,6 +16,7 @@ class DefaultTickService extends TaskServiceAbstract {
     public function run(): TaskFighter
     {
         --$this->taskFighter->dueIn;
+
         if($this->taskFighter->priority < 100){
             ++$this->taskFighter->priority;
         }

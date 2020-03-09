@@ -21,7 +21,10 @@ class CompleteAssessmentTickService extends TaskServiceAbstract
         if ($this->taskFighter->priority < 100) {
             ++$this->taskFighter->priority;
             if ($this->taskFighter->dueIn < 11) {
-                $this->taskFighter->priority += 2;
+                ++$this->taskFighter->priority;
+            }
+            if ($this->taskFighter->dueIn < 6) {
+                ++$this->taskFighter->priority;
             }
         }
 

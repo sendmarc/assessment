@@ -1960,7 +1960,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'task-row',
-  props: ['task'],
+  props: {
+    'task': Object
+  },
+  methods: {
+    deleteTask: function deleteTask(taskId) {
+      axios["delete"]("/task/".concat(taskId)).then(function (response) {});
+    }
+  },
   data: function data() {
     return {
       task: {
@@ -2052,17 +2059,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.isHidden = !this.isHidden;
     },
     deleteTask: function deleteTask(taskId) {
+      var _this = this;
+
       return _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var self;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
-                return axios["delete"]("/tasks/".concat(taskId));
+                self = _this;
+                _context.next = 3;
+                return axios["delete"]("/tasks/".concat(taskId)).then(function (response) {
+                  this.tasks = response.data.tasks;
+                }.bind(_this));
 
-              case 2:
+              case 3:
               case "end":
                 return _context.stop();
             }
@@ -2071,29 +2084,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     tickTasks: function tickTasks() {
-      var _this = this;
+      var _this2 = this;
 
-      axios.all([this._tick(), this._getTasks()]).then(axios.spread(function () {
-        for (var _len = arguments.length, response = new Array(_len), _key = 0; _key < _len; _key++) {
-          response[_key] = arguments[_key];
-        }
-
-        _this.tasks = response[1]['data'];
-      }));
-    },
-    _tick: function _tick() {
       return _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var self;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.next = 2;
-                return axios.get('/list/tick');
-
-              case 2:
-                return _context2.abrupt("return", _context2.sent);
+                self = _this2;
+                _context2.next = 3;
+                return axios.get('/list/tick').then(function (response) {
+                  this.tasks = response.data.tasks;
+                }.bind(_this2));
 
               case 3:
               case "end":
@@ -2102,38 +2107,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee2);
       }))();
-    },
-    _getTasks: function _getTasks() {
-      return _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                _context3.next = 2;
-                return axios.get('/tasks');
-
-              case 2:
-                return _context3.abrupt("return", _context3.sent);
-
-              case 3:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3);
-      }))();
     }
   },
-  created: function created() {
-    var _this2 = this;
-
-    this.$on('updateTasks', function () {
-      _this2._getTasks().then(function (response) {
-        _this2.tasks = JSON.parse(response);
-      });
-    });
+  watch: {
+    tasks: {
+      handler: function handler(newTasks, oldTasks) {
+        console.log(newTasks, oldTasks);
+      },
+      deep: true
+    }
   }
 });
 
@@ -71276,27 +71258,25 @@ var render = function() {
         _vm._v(_vm._s(_vm.task.dueIn))
       ]),
       _vm._v(" "),
-      _vm._m(0)
+      _c("td", [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-sm btn-outline-info btn-block",
+            attrs: { type: "button" },
+            on: {
+              click: function($event) {
+                return _vm.deleteTask(_vm.task.id)
+              }
+            }
+          },
+          [_vm._v("\n            Delete\n        ")]
+        )
+      ])
     ]
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-sm btn-outline-info btn-block",
-          attrs: { type: "button" }
-        },
-        [_vm._v("\n            Delete\n        ")]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -84094,8 +84074,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/rikhotson/PhpstormProjects/assessment/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/rikhotson/PhpstormProjects/assessment/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/rikhotson/PhpstormProjects/assessment2/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/rikhotson/PhpstormProjects/assessment2/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

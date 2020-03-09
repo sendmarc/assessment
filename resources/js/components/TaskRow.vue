@@ -4,7 +4,7 @@
         <td class="text-center">{{ task.priority }}</td>
         <td class="text-center">{{ task.dueIn }}</td>
         <td>
-            <button class="btn btn-sm btn-outline-info btn-block" type="button">
+            <button @click="deleteTask(task.id)" class="btn btn-sm btn-outline-info btn-block" type="button">
                 Delete
             </button>
         </td>
@@ -14,7 +14,13 @@
 <script>
     export default {
         name: 'task-row',
-        props: ['task'],
+        props: {'task' : Object},
+        methods: {
+          deleteTask : (taskId) => {
+              axios.delete(`/task/${taskId}`).then(response => {
+              })
+          }
+        },
         data: function() {
             return {
                 task: {

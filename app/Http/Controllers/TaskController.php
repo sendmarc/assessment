@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Tasks\CreateTask;
-use App\Task;
+use App\Models\Task;
 use App\TaskFighter;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
@@ -20,68 +22,33 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = $this->tasks();
-        return view('index', compact('tasks'));
-    }
+        $tasks = Task::all();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
+        return view('index', compact('tasks'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return Response
+     * @param CreateTask $request
+     *
+     * @return JsonResponse
      */
-    public function store(CreateTask $request): ?Response
+    public function store(CreateTask $request): JsonResponse
     {
 
         $task = new Task;
         $task->name = $request->name;
         $task->priority = $request->priority;
         $task->dueIn = $request->dueIn;
-        $task->save(['name' => $request->name]);
-    }
+        $status =  $task->save();
+        if($status){
+            $message = 'Task Created';
+        }else{
+            $message = 'Task not created';
+        }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+        return \response()->json(['status' => $status, 'message' => $message, 'tasks' => Task::all()->toArray()]);
     }
 
     /**
@@ -89,30 +56,27 @@ class TaskController extends Controller
      *
      * @param int $id
      *
-     * @return void
+     * @return string
      */
-    public function destroy($id): void
+    public function destroy($id): string
     {
-        $task = Task::findOrFail($id);
-        if($task){
+        try{
+            $task = Task::findOrFail($id);
             $task->delete();
-
+            $status = true;
+            $message = 'Task Deleted';
+        }catch (ModelNotFoundException $e){
+            $status = false;
+            $message = $e->getMessage();
         }
+
+        return response()->json(['status' => $status, 'message' => $message, 'tasks' => Task::all()->toArray()])->getContent();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @return Task[]|Collection
-     */
-    public function tasks()
-    {
-        return Task::all();
-    }
 
     public function tick(): string
     {
-        $tasks = $this->tasks();
+        $tasks = Task::all();
         $tasks->map(static function (Task $task){
             /** @var TaskFighter $taskFighter */
             $taskFighter = TaskFighter::of($task->name, $task->priority, $task->dueIn);
@@ -121,9 +85,9 @@ class TaskController extends Controller
                 'priority' => $taskFighter->priority,
                 'dueIn' => $taskFighter->dueIn
             ]);
-        });
-        //TODO: Report errors when task service is not defined
 
-        return 'tick';
+        });
+
+        return \response()->json(['status' => true, 'message' => 'Task ticked', 'tasks' => Task::all()])->getContent();
     }
 }

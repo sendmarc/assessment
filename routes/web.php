@@ -1,5 +1,6 @@
 <?php
 Route::get('/', 'TaskController@index');
-Route::get('/tasks', 'TaskController@tasks');
-Route::post('/tasks', 'TaskController@store');
+Route::resource('/task', 'TaskController', [
+    'only' => ['index', 'store', 'destroy']
+]);
 Route::get('/list/tick', 'TaskController@tick');

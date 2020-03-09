@@ -23,9 +23,9 @@
                                 </div>
                             </div>
                             <table class="table table-borderless table-hover">
-                                <table-head :is-hidden="isHidden"></table-head>
+                                    <table-head :is-hidden="isHidden"></table-head>
                                 <tbody>
-                                <task-row :key="task.id" :task="task" v-for="task in tasks"></task-row>
+                                    <task-row :key="task.id" :task="task" v-for="task in tasks"></task-row>
                                 </tbody>
                             </table>
                         </div>
@@ -57,31 +57,25 @@
                 this.isHidden = !this.isHidden;
             },
             async deleteTask(taskId) {
-                await axios.delete(`/tasks/${taskId}`);
-            },
-            tickTasks() {
-                axios.all([this._tick(), this._getTasks()]).then(
-                    axios.spread((...response) => {
-                        this.tasks = response[1]['data'];
-                    }),
-                );
-            },
-            async _tick() {
-                return await axios.get('/list/tick');
-            },
-            async _getTasks() {
-                return await axios.get('/tasks');
+                await axios.delete(`/tasks/${taskId}`).then(function(response) {
+                    this.tasks = response.data.tasks;
+                }.bind(this));
             },
 
+            async tickTasks() {
+                await axios.get('/list/tick').then(function(response){
 
+                    this.tasks = response.data.tasks;
+                }.bind(this))
+            },
         },
-        created() {
-            this.$on('updateTasks', () => {
-                    this._getTasks().then(response => {
-                       this.tasks = JSON.parse(response);
-                   });
-                }
-            )
+        watch :{
+            tasks : {
+                handler: function(newTasks, oldTasks) {
+                    console.log(newTasks, oldTasks)
+                },
+                deep : true
+            }
         }
     };
 </script>
