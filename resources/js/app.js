@@ -8,9 +8,9 @@ window.$ = require('jquery');
 
 Vue.use(BootstrapVue);
 
-Vue.component('home', Home);
+Vue.component('Home', Home);
 Vue.component('Form', Form);
-Vue.component('navigation', Navigation);
+Vue.component('Navigation', Navigation);
 const app = new Vue({
     el: '#app',
     template : '' ,

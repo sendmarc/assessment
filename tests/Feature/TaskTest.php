@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class TaskTest extends TestCase
@@ -14,7 +13,7 @@ class TaskTest extends TestCase
      *
      * @return void
      */
-    public function testHomePage()
+    public function testHomePage(): void
     {
         $response = $this->get('/');
 
@@ -22,7 +21,7 @@ class TaskTest extends TestCase
         $response->assertSee('SendMarc');
     }
 
-    public function testApiIndexPage()
+    public function testApiIndexPage(): void
     {
         $response = $this->get('/api/task', []);
         $response->assertStatus(200);
@@ -60,23 +59,24 @@ class TaskTest extends TestCase
             'priority' => random_int(0, 100),
             'dueIn'    => random_int(1, 360),
         ];
-        $response = $this->postJson('api/tasks', $formData);
+        $response = $this->postJson('api/task', $formData, [
+            'Accept'       => 'application/json',
+            'Content-Type' => 'application/json',
+        ]);
         $this->assertDatabaseHas('tasks', $formData);
         $response->assertJsonStructure([
-            'data' => [
-                '*' => [
+            'data' =>
+                [
                     'name',
                     'priority',
                     'dueIn',
                     'createdAt',
                     'updatedAt',
                 ],
-            ],
         ]);
-
     }
 
-    public function testCannotVisitUnknownRoute()
+    public function testCannotVisitUnknownRoute(): void
     {
         $response1 = $this->get('/unknown-route');
         $response1->assertStatus(404);
@@ -86,7 +86,7 @@ class TaskTest extends TestCase
         $response2->assertSee('404');
     }
 
-    public function testTaskTickRoute()
+    public function testTaskTickRoute(): void
     {
         $response = $this->get('/list/tick', []);
         $response->assertStatus(200);

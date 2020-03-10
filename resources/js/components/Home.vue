@@ -1,6 +1,6 @@
 <template>
     <div>
-        <navigation></navigation>
+        <Navigation/>
         <div class="container mt-5">
             <div class="row">
                 <div class="col-lg-12 mb-4 mt-4">
@@ -15,13 +15,6 @@
                             </div>
                         </div>
                         <div class="card-body p-0">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="alert alert-danger" v-if="form.errors.length">
-                                        <div v-for="error in form.errors">{{ error }}</div>
-                                    </div>
-                                </div>
-                            </div>
                             <table class="table table-borderless table-hover">
                                 <thead>
                                 <tr class="border-bottom text-white">
@@ -29,6 +22,15 @@
                                     <td class="text-center">Priority</td>
                                     <td class="text-center">Due In</td>
                                     <td class="task-input-half">&nbsp</td>
+                                </tr>
+                                <tr v-if='form.errors.length'>
+                                    <td colspan="5">
+                                        <div class="alert alert-danger mb-0">
+                                            <p v-for="error in form.errors">
+                                                {{ error }}
+                                            </p>
+                                        </div>
+                                    </td>
                                 </tr>
                                 <tr class="border-bottom border-top" v-if="!isHidden">
                                     <td>
@@ -78,7 +80,7 @@
                         priority: '',
                         dueIn: '',
                     },
-                    errors: {},
+                    errors: [],
                 },
             };
         },
@@ -90,7 +92,6 @@
                 await axios.delete(`/api/task/${taskId}`).then(response => {
 
                     this.tasks.splice(index, 1);
-                    console.log(this.tasks)
                 });
             },
 
@@ -110,20 +111,25 @@
                 })
             },
             async createTask(){
+                this.form.errors = [];
                 await axios.post('/api/task', this.form.data).then(response => {
-                    console.log(response.data.data)
-                    if(response.data.data.errors){
+                    this.tasks.push(response.data.data);
+                    this.form.data.name = '';
+                    this.form.data.priority = '';
+                    this.form.data.dueIn = '';
+                }).catch(errors => {
+                    if(errors.response.data.errors){
                         ['name', 'priority', 'dueIn'].forEach((value) => {
-                            if(response.data.data.errors[value]){
-                                this.form.errors[value] = response.data.data.errors[value]
+                            if(errors.response.data.errors[value]){
+                                this.form.errors.push(errors.response.data.errors[value][0])
                             }
                         });
                     }else{
-                        this.form.success = 'Task added successfully';
+                        this.form.success = errors.response.data.message;
                     }
                 });
 
-                ;
+
 
             }
         },
@@ -132,3 +138,8 @@
         }
     };
 </script>
+<style scoped>
+    .alert-danger {
+        background: #d48888;
+    }
+</style>
