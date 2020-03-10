@@ -82,7 +82,7 @@ class TaskController extends Controller
      *
      * @return TaskResource
      */
-    public function update(Request $request, Task $task): TaskResource
+    public function update(CreateTask $request, Task $task): TaskResource
     {
         $task->update($request->only([
             'name',
