@@ -51,7 +51,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if ($exception instanceof ModelNotFoundException) {
+        if ($exception instanceof ModelNotFoundException && $request->wantsJson()) {
             return response()->json([
                 'data' => 'Task not found'
             ], 404);
