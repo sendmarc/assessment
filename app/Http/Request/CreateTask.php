@@ -15,7 +15,7 @@ class CreateTask extends FormRequest
     {
         return [
             'name'     => 'required',
-            'priority' => 'required|numeric|min:1',
+            'priority' => 'required|numeric',
             'dueIn'    => 'required|numeric|min:1',
         ];
     }
