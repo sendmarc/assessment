@@ -11,31 +11,9 @@
 |
 */
 
+//The other code was moved to api.php
+//The following may help to serve the vue view
+
 Route::get('/', function() {
-    return redirect('/tasks');
-});
-
-Route::get('/tasks', function () {
-    $tasks = DB::table('tasks')->select('*')->get();
-    return $tasks;
-});
-
-Route::post('/tasks', function(\Illuminate\Http\Request $request) {
-    DB::insert("insert into tasks set name = '{$request->name}', priority = '{$request->priority}', dueIn = '{$request->dueIn}'");
-    return 'created';
-});
-
-Route::delete('/tasks/{id}', function(\Illuminate\Http\Request $request) {
-    DB::delete("delete from tasks where id = '{$request->id}'");
-    return 'deleted';
-});
-
-Route::get('/list/tick', function() {
-    $tasks = DB::table('tasks')->select('*')->get();
-    foreach ($tasks as $task) {
-        $taskFighter = new \App\TaskFighter($task->name, $task->priority, $task->dueIn);
-        $taskFighter->tick();
-        DB::update("update tasks set priority = '{$taskFighter->priority}', dueIn = '{$taskFighter->dueIn}' where id = '{$task->id}'");
-    }
-    return 'tick';
+    return View('welcome'); //Change welcome to have the interface
 });
