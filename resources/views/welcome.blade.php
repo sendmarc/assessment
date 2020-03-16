@@ -16,9 +16,7 @@
     </head>
     <body>
     <div id='app'>
-        <h3>Task Fighter</h3>
-        <hr>
-        <task-table></task-table>
+        <task-container></task-container>
     </div>
     <script src="{{ asset('js/app.js') }}" defer></script>
     </body>

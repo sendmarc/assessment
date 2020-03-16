@@ -42,26 +42,33 @@
                     return filteredEntry;
                 });
                 return data;
+            },
+            fetchData() {
+                fetch('api/tasks')
+                    .then(res => res.json())
+                    .then(json => {
+                        let keys = ["id", "name", "priority", "dueIn", ""];
+                        let entries = this.filterData(json, keys);
+                        //columns
+                        this.columns = keys.map(key => {
+                            return {
+                                label: key.toUpperCase(),
+                                field: key,
+                                sort: 'asc'
+                            };
+                        });
+                        //rows
+                        entries.map(entry => {
+                            var foundIndex = this.rows.findIndex(item => item.id === entry.id);
+                            if (foundIndex === -1) this.rows.push(entry);
+                            else this.rows[foundIndex] = entry;
+                        });
+                    })
+                    .catch(err => console.log(err));
             }
         },
         mounted(){
-            fetch('api/tasks')
-                .then(res => res.json())
-                .then(json => {
-                    let keys = ["id", "name", "priority", "dueIn"];
-                    let entries = this.filterData(json, keys);
-                    //columns
-                    this.columns = keys.map(key => {
-                        return {
-                            label: key.toUpperCase(),
-                            field: key,
-                            sort: 'asc'
-                        };
-                    });
-                    //rows
-                    entries.map(entry => this.rows.push(entry));
-                })
-                .catch(err => console.log(err));
-        }
+            this.fetchData();
+        },
     };
 </script>
