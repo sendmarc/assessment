@@ -2,8 +2,13 @@
 
 namespace App;
 
-class TaskFighter
+use Illuminate\Database\Eloquent\Model;
+
+class TaskFighter extends Model
 {
+    protected $table = 'tasks';
+    protected $fillable = ['name', 'priority', 'dueIn'];
+
     public $name;
 
     public $priority;
