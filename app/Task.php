@@ -13,15 +13,6 @@ class Task extends Model
 //    public $priority;
 //    public $dueIn;
 
-    public function __construct()
-    {
-
-    }
-
-    public static function of() {
-        return new static();
-    }
-
     public function tick()
     {
         if ($this->name != 'Get Older') {
