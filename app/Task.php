@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TaskFighter extends Model
+class Task extends Model
 {
     protected $table = 'tasks';
     protected $fillable = ['name', 'priority', 'dueIn'];

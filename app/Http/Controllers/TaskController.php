@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\TaskFighter;
+use App\Task;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -14,7 +14,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        return response()->json(TaskFighter::all(),200);
+        return response()->json(Task::all(),200);
     }
 
     /**
@@ -25,43 +25,43 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        $task = TaskFighter::create($request->all());
+        $task = Task::create($request->all());
         return response()->json($task, 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\TaskFighter  $taskFighter
+     * @param  \App\Task  $task
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show(TaskFighter $taskFighter)
+    public function show(Task $task)
     {
-        return response()->json($taskFighter, 200);
+        return response()->json($task, 200);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\TaskFighter  $taskFighter
+     * @param  \App\Task  $task
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, TaskFighter $taskFighter)
+    public function update(Request $request, Task $task)
     {
-        $taskFighter->update($request->all());
-        return response()->json($taskFighter, 200);
+        $task->update($request->all());
+        return response()->json($task, 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\TaskFighter  $taskFighter
+     * @param  \App\Task  $task
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(TaskFighter $taskFighter)
+    public function destroy(Task $task)
     {
-        $taskFighter->delete();
+        $task->delete();
         return response()->json(null, 204);
     }
 }

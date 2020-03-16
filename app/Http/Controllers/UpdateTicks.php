@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\TaskFighter;
+use App\Task;
 use Illuminate\Http\Request;
 
 class UpdateTicks extends Controller
@@ -15,7 +15,7 @@ class UpdateTicks extends Controller
      */
     public function __invoke(Request $request)
     {
-        foreach(TaskFighter::all() as $task) {
+        foreach(Task::all() as $task) {
             $task->tick();
             $task->save();
         }
