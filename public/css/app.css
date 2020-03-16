@@ -1,0 +1,23 @@
+body {
+  padding: 2em;
+}
+
+.tick-button {
+  float: right;
+  display: inline;
+  margin-top: -10px !important;
+}
+
+h3 {
+  display: inline;
+}
+
+#app table th:nth-child(5) > i {
+  display: none;
+}
+
+#app table th:nth-child(5),
+#app table > tbody > tr td:nth-child(5) {
+  width: 3em;
+}
+
