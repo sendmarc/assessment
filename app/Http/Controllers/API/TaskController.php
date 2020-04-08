@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Task;
+use App\TaskFighter;
 
 class TaskController extends Controller
 {
@@ -63,5 +64,24 @@ class TaskController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Update tasks priorty and dueIn
+     *
+     */
+    public function tick()
+    {
+        $taskFighter = new TaskFighter();
+        $tasks = Task::all();
+
+        foreach ($tasks as $task) {
+            $priority = $taskFighter->tick($task->name, $task->priority, $task->dueIn)['priority'];
+            $dueIn = $taskFighter->tick($task->name, $task->priority, $task->dueIn)['dueIn'];
+
+            //update tasks table
+            Task::where("id", 3)->update(["priority" => $priority, "dueIn" => $dueIn]);
+        }
+        
     }
 }

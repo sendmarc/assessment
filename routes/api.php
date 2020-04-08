@@ -19,4 +19,5 @@ Route::post('register', 'API\UserController@register');
 Route::group(['middleware' => ['web','auth:api']], function() {
     Route::apiResource('tasks', 'API\TaskController');
     Route::post('logout', 'API\UserController@logout');
+    Route::get('tick', 'API\TaskController@tick');
 });
