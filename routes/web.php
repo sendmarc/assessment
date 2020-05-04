@@ -14,7 +14,7 @@
 Route::get('/', function() {
     return redirect('/tasks');
 });
-Route::resource('/','TaskFighterController');
+Route::resource('tasks','TaskFighterController');
 Route::get('/tasks/{id}','TaskFighterController@destroy');
 
 
