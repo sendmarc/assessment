@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\TaskFighter;
 use App\TaskFighterModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 
 class TaskFighterController extends Controller
 {
@@ -16,7 +17,8 @@ class TaskFighterController extends Controller
     public function index()
     {
         $tasks = TaskFighterModel::get();
-
+        $title = "Tasks";
+        return View::make('tasks.tasks', compact('tasks','title'))->render();
     }
 
     /**
@@ -37,7 +39,10 @@ class TaskFighterController extends Controller
      */
     public function store(Request $request)
     {
-        //
+//        Route::post('/tasks', function(\Illuminate\Http\Request $request) {
+//            DB::insert("insert into tasks set name = '{$request->name}', priority = '{$request->priority}', dueIn = '{$request->dueIn}'");
+//            return 'created';
+//        });
     }
 
     /**
@@ -82,6 +87,9 @@ class TaskFighterController extends Controller
      */
     public function destroy($id)
     {
-        //
+//        Route::delete('/tasks/{id}', function(\Illuminate\Http\Request $request) {
+//            DB::delete("delete from tasks where id = '{$request->id}'");
+//            return 'deleted';
+//        });
     }
 }
