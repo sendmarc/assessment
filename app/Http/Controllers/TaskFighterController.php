@@ -39,10 +39,13 @@ class TaskFighterController extends Controller
      */
     public function store(Request $request)
     {
-//        Route::post('/tasks', function(\Illuminate\Http\Request $request) {
-//            DB::insert("insert into tasks set name = '{$request->name}', priority = '{$request->priority}', dueIn = '{$request->dueIn}'");
-//            return 'created';
-//        });
+        $task = new TaskFighterModel();
+        $task->name     =  $request->name;
+        $task->priority =  $request->priority;
+        $task->dueIn    =  $request->dueIn;
+        $task->save();
+        return 'created';
+
     }
 
     /**
@@ -87,9 +90,21 @@ class TaskFighterController extends Controller
      */
     public function destroy($id)
     {
-//        Route::delete('/tasks/{id}', function(\Illuminate\Http\Request $request) {
-//            DB::delete("delete from tasks where id = '{$request->id}'");
-//            return 'deleted';
-//        });
+        $tasks = TaskFighterModel::find($id);
+        $tasks->delete();
+        return redirect('/')->withSuccess('Task Deleted Successfully!!!');
+    }
+
+    public function tickItem(){
+        $tasks = TaskFighterModel::get();
+        foreach ($tasks as $task) {
+            $taskFighter = new TaskFighter($task->name, $task->priority, $task->dueIn);
+            $taskFighter->tick();
+            $tasks              = TaskFighterModel::find($task->id);
+            $tasks->priority    = $taskFighter->priority;
+            $tasks->dueIn       = $taskFighter->dueIn;
+            $tasks->save();
+        }
+        return redirect('/')->withSuccess('Task updated Successfully!!!');
     }
 }

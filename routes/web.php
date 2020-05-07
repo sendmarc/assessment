@@ -11,19 +11,11 @@
 |
 */
 
+
 Route::get('/', function() {
     return redirect('/tasks');
 });
 Route::resource('tasks','TaskFighterController');
 Route::get('/tasks/{id}','TaskFighterController@destroy');
-
-
-Route::get('/list/tick', function() {
-    $tasks = DB::table('tasks')->select('*')->get();
-    foreach ($tasks as $task) {
-        $taskFighter = new \App\TaskFighter($task->name, $task->priority, $task->dueIn);
-        $taskFighter->tick();
-        DB::update("update tasks set priority = '{$taskFighter->priority}', dueIn = '{$taskFighter->dueIn}' where id = '{$task->id}'");
-    }
-    return 'tick';
-});
+Route::delete('/tasks/{id}','TaskFighterController@destroy');
+Route::get('/list/tick','TaskFighterController@tickItem');
