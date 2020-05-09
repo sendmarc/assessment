@@ -15,7 +15,11 @@
 Route::get('/', function() {
     return redirect('/tasks');
 });
-Route::resource('tasks','TaskFighterController');
+Route::view('/', 'tasks.tasks')->name('tasks');
+
+Route::get('tasks','TaskFighterController@index');
 Route::get('/tasks/{id}','TaskFighterController@destroy');
 Route::delete('/tasks/{id}','TaskFighterController@destroy');
 Route::get('/list/tick','TaskFighterController@tickItem');
+
+

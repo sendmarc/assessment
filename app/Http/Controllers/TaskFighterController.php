@@ -16,9 +16,11 @@ class TaskFighterController extends Controller
      */
     public function index()
     {
-        $tasks = TaskFighterModel::get();
+        $tasks = TaskFighterModel::latest()->get();
         $title = "Tasks";
-        return View::make('tasks.tasks', compact('tasks','title'))->render();
+        $data = ['title' => $title, 'message' => $tasks];
+        return response()->json($data);
+
     }
 
     /**
