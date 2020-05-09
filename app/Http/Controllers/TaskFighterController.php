@@ -94,7 +94,7 @@ class TaskFighterController extends Controller
     {
         $tasks = TaskFighterModel::find($id);
         $tasks->delete();
-        return redirect('/')->withSuccess('Task Deleted Successfully!!!');
+        return response()->json(['message'=>'Task Deleted Successfully!!!']);
     }
 
     public function tickItem(){
@@ -107,6 +107,6 @@ class TaskFighterController extends Controller
             $tasks->dueIn       = $taskFighter->dueIn;
             $tasks->save();
         }
-        return redirect('/')->withSuccess('Task updated Successfully!!!');
+        return response()->json(['message'=>'Tick Successfully executed!!!']);
     }
 }

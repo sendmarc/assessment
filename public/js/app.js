@@ -1941,7 +1941,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1966,24 +1965,54 @@ __webpack_require__.r(__webpack_exports__);
         _this.tasks = response.data.message;
       });
     },
-    // createTask() {
-    //     axios.post('api/tasks', {})
-    //         .then((res) => {
-    //             this.task.body = '';
-    //             this.task.user_id = '';        ///added by me
-    //             this.edit = false;
-    //             this.fetchTaskList();
-    //         })
-    //         .catch((err) => console.error(err));
-    // },
-    //
-    deleteTask: function deleteTask(id) {
+    createTask: function createTask() {
       var _this2 = this;
 
-      axios.post('tasks/' + id).then(function (res) {
+      axios.post('tasks', {}).then(function (res) {
         _this2.fetchTasks();
       })["catch"](function (err) {
         return console.error(err);
+      });
+    },
+    taskTick: function taskTick() {
+      var _this3 = this;
+
+      axios.get('/list/tick').then(function (res) {
+        _this3.fetchTasks();
+      })["catch"](function (err) {
+        return console.error(err);
+      });
+    },
+    deleteTask: function deleteTask(id) {
+      $.confirm({
+        theme: 'black',
+        animationBounce: 2.5,
+        closeIcon: true,
+        cancelButton: 'Cancel',
+        icon: 'fa fa fa-trash fa-2x',
+        title: 'Delete A Campaign!!!',
+        content: 'Are you sure you want to delete a campaign?',
+        type: 'red',
+        draggable: false,
+        buttons: {
+          tryAgain: {
+            text: ' Delete',
+            btnClass: 'btn-blue fa fa-plus',
+            action: function action() {
+              var _this4 = this;
+
+              axios.get('tasks/' + id).then(function (response) {
+                _this4.fetchTasks(); //proper message
+
+
+                alert(response.data.message);
+              })["catch"](function (error) {
+                console.log(error);
+              });
+            }
+          },
+          cancel: function cancel() {}
+        }
       });
     }
   },
@@ -19610,33 +19639,74 @@ var render = function() {
       [_vm._v(_vm._s(_vm.title))]
     ),
     _vm._v(" "),
-    _c("div", { staticClass: "mb-4" }),
+    _c("div", { staticClass: "mb-4" }, [
+      _c(
+        "div",
+        {
+          staticClass: "btn btn-primary",
+          attrs: { title: "TICK" },
+          on: {
+            click: function($event) {
+              return _vm.taskTick()
+            }
+          }
+        },
+        [_c("i", { staticClass: "fa fa-check" })]
+      )
+    ]),
     _vm._v(" "),
     _vm.tasks.length
-      ? _c("div", { staticClass: "mb-4" }, [
-          _vm._v("\n            No tasks yet\n        ")
+      ? _c("table", { staticClass: "table table-striped" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.tasks, function(task) {
+              return _c("tr", [
+                _c("td", [_vm._v(_vm._s(task.name))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(task.priority))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(task.dueIn))]),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "btn btn-danger",
+                      attrs: { title: "DELETE", type: "submit" },
+                      on: {
+                        click: function($event) {
+                          return _vm.deleteTask(task.id)
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "fa fa-trash" })]
+                  )
+                ])
+              ])
+            }),
+            0
+          )
         ])
-      : _vm._e(),
-    _vm._v(" "),
-    _c("table", { staticClass: "table table-striped" }, [
-      _vm._m(0),
-      _vm._v(" "),
-      _c(
-        "tbody",
-        _vm._l(_vm.tasks, function(task) {
-          return _c("tr", [
-            _c("td", [_vm._v(_vm._s(task.name))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(task.priority))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(task.dueIn))]),
-            _vm._v(" "),
-            _vm._m(1, true)
-          ])
-        }),
-        0
-      )
-    ])
+      : _c("div", { staticClass: "mb-4" }, [
+          _vm._v("\n        No tasks yet"),
+          _c("br"),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "btn btn-primary",
+              attrs: { title: "Create" },
+              on: {
+                click: function($event) {
+                  return _vm.createTask()
+                }
+              }
+            },
+            [_c("i", { staticClass: "fa fa-plus" })]
+          )
+        ])
   ])
 }
 var staticRenderFns = [
@@ -19651,26 +19721,6 @@ var staticRenderFns = [
         _c("td", [_vm._v("Due In")]),
         _c("td", [_vm._v("Action")])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c(
-        "div",
-        {
-          staticClass: "btn btn-danger",
-          attrs: {
-            onclick: "deleteTask(1)",
-            "data-toggle": "delete-task",
-            title: "DELETE",
-            type: "submit"
-          }
-        },
-        [_c("i", { staticClass: "fa fa-trash" })]
-      )
     ])
   }
 ]

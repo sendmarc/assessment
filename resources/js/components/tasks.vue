@@ -2,12 +2,10 @@
     <div class="card-body">
         <h4 class="card-header" placeholder="Title" v-model="title">{{ title }}</h4>
         <div class="mb-4">
-<!--            <a class="btn btn-primary" title="TICK" href="{{ URL::to('list/tick/') }}"><i class="fa fa-check"></i></a>-->
+            <div class="btn btn-primary" title="TICK" @click="taskTick()"><i class="fa fa-check"></i></div>
         </div>
-        <div v-if="tasks.length" class="mb-4">
-            No tasks yet
-        </div>
-        <table class="table table-striped">
+
+        <table v-if="tasks.length" class="table table-striped">
             <thead>
             <tr><td>Name</td><td>Priority</td><td>Due In</td><td>Action</td></tr>
             </thead>
@@ -18,15 +16,16 @@
                     <td>{{ task.priority }}</td>
                     <td>{{ task.dueIn }}</td>
                     <td>
-                        <div onclick="deleteTask(1)" class="btn btn-danger" data-toggle="delete-task" title="DELETE" type="submit"><i class="fa fa-trash"></i></div>
+                        <div  @click="deleteTask(task.id)" class="btn btn-danger" title="DELETE" type="submit"><i class="fa fa-trash"></i></div>
                     </td>
             </tr>
             </tbody>
 
         </table>
-
-
-
+        <div v-else class="mb-4">
+            No tasks yet<br/>
+            <div  @click="createTask()" class="btn btn-primary" title="Create"><i class="fa fa-plus"></i></div>
+        </div>
 
 
     </div>
@@ -59,28 +58,56 @@
                 })
 
             },
-            // createTask() {
-            //     axios.post('api/tasks', {})
-            //         .then((res) => {
-            //             this.task.body = '';
-            //             this.task.user_id = '';        ///added by me
-            //             this.edit = false;
-            //             this.fetchTaskList();
-            //         })
-            //         .catch((err) => console.error(err));
-            // },
-            //
-            deleteTask(id) {
-                axios.post('tasks/' + id)
+            createTask() {
+                axios.post('tasks', {})
                     .then((res) => {
-                        this.fetchTasks()
+                        this.fetchTasks();
                     })
                     .catch((err) => console.error(err));
+            },
+            taskTick(){
+                axios.get('/list/tick')
+                    .then((res) => {
+                        this.fetchTasks();
+                    })
+                    .catch((err) => console.error(err));
+            },
+
+            deleteTask(id) {
+                $.confirm({
+                    theme: 'black',
+                    animationBounce: 2.5,
+                    closeIcon: true,
+                    cancelButton:'Cancel',
+                    icon: 'fa fa fa-trash fa-2x',
+                    title:'Delete A Campaign!!!',
+                    content: 'Are you sure you want to delete a campaign?',
+                    type: 'red',
+                    draggable: false,
+                    buttons: {
+                        tryAgain: {
+                            text:  ' Delete',
+                            btnClass: 'btn-blue fa fa-plus',
+                            action: function(){
+                                axios.get('tasks/'+id).then((response) => {
+                                    this.fetchTasks();
+                                    //proper message
+                                    alert(response.data.message)
+                                    })
+                                    .catch(error => {
+                                    console.log(error);
+                                })
+                            }
+                        },
+                        cancel: function () {
+
+                        }
+                    }
+                })
             },
         },
         mounted(){
             this.fetchTasks();
-
         },
     }
 </script>
