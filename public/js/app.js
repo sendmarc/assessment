@@ -1941,6 +1941,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1961,15 +1964,20 @@ __webpack_require__.r(__webpack_exports__);
     fetchTasks: function fetchTasks() {
       var _this = this;
 
-      axios.get('tasks', {}).then(function (response) {
-        _this.tasks = response.data.message;
+      axios.get('api/tasks').then(function (response) {
+        _this.tasks = response.data.handle_data;
       });
     },
     createTask: function createTask() {
       var _this2 = this;
 
-      axios.post('tasks', {}).then(function (res) {
+      axios.post('api/tasks', {}).then(function (response) {
         _this2.fetchTasks();
+
+        $('.display-messages').html('<div class="alert alert-success">' + response.data.message + '</div>');
+        setTimeout(function () {
+          $('.alert').fadeOut('slow');
+        }, 3000);
       })["catch"](function (err) {
         return console.error(err);
       });
@@ -1977,8 +1985,27 @@ __webpack_require__.r(__webpack_exports__);
     taskTick: function taskTick() {
       var _this3 = this;
 
-      axios.get('/list/tick').then(function (res) {
+      axios.get('api/list/tick').then(function (response) {
         _this3.fetchTasks();
+
+        $('.display-messages').html('<div class="alert alert-success">' + response.data.message + '</div>');
+        setTimeout(function () {
+          $('.alert').fadeOut('slow');
+        }, 3000);
+      })["catch"](function (err) {
+        return console.error(err);
+      });
+    },
+    editTask: function editTask(id) {
+      var _this4 = this;
+
+      axios.get('api/task/' + id).then(function (response) {
+        _this4.fetchTasks();
+
+        $('.display-messages').html('<div class="alert alert-success">' + response.data.message + '</div>');
+        setTimeout(function () {
+          $('.alert').fadeOut('slow');
+        }, 3000);
       })["catch"](function (err) {
         return console.error(err);
       });
@@ -1990,24 +2017,26 @@ __webpack_require__.r(__webpack_exports__);
         closeIcon: true,
         cancelButton: 'Cancel',
         icon: 'fa fa fa-trash fa-2x',
-        title: 'Delete A Campaign!!!',
-        content: 'Are you sure you want to delete a campaign?',
+        title: 'Delete A Task!!!',
+        content: 'Are you sure you want to delete a task?',
         type: 'red',
         draggable: false,
         buttons: {
           tryAgain: {
             text: ' Delete',
-            btnClass: 'btn-blue fa fa-plus',
+            btnClass: 'btn-blue fa fa-trash',
             action: function action() {
-              var _this4 = this;
+              var _this5 = this;
 
-              axios.get('tasks/' + id).then(function (response) {
-                _this4.fetchTasks(); //proper message
+              axios.get('api/deleteTask/' + id).then(function (response) {
+                _this5.fetchTasks();
 
-
-                alert(response.data.message);
-              })["catch"](function (error) {
-                console.log(error);
+                $('.display-messages').html('<div class="alert alert-success">' + response.data.message + '</div>');
+                setTimeout(function () {
+                  $('.alert').fadeOut('slow');
+                }, 3000);
+              })["catch"](function (err) {
+                return console.error(err);
               });
             }
           },
@@ -2015,6 +2044,9 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     }
+  },
+  updated: function updated() {
+    this.fetchTasks();
   },
   mounted: function mounted() {
     this.fetchTasks();
@@ -19639,7 +19671,7 @@ var render = function() {
       [_vm._v(_vm._s(_vm.title))]
     ),
     _vm._v(" "),
-    _c("div", { staticClass: "mb-4" }, [
+    _c("div", { staticClass: "mb-4 mt-4" }, [
       _c(
         "div",
         {
@@ -19652,6 +19684,20 @@ var render = function() {
           }
         },
         [_c("i", { staticClass: "fa fa-check" })]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "btn btn-danger",
+          attrs: { title: "CREATE TASK", type: "submit" },
+          on: {
+            click: function($event) {
+              return _vm.createTask()
+            }
+          }
+        },
+        [_c("i", { staticClass: "fa fa-plus" })]
       )
     ]),
     _vm._v(" "),
@@ -19661,8 +19707,10 @@ var render = function() {
           _vm._v(" "),
           _c(
             "tbody",
-            _vm._l(_vm.tasks, function(task) {
+            _vm._l(_vm.tasks, function(task, index) {
               return _c("tr", [
+                _c("td", [_vm._v(_vm._s(index + 1))]),
+                _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(task.name))]),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(task.priority))]),
@@ -19682,6 +19730,20 @@ var render = function() {
                       }
                     },
                     [_c("i", { staticClass: "fa fa-trash" })]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "btn btn-secondary",
+                      attrs: { title: "EDIT", type: "submit" },
+                      on: {
+                        click: function($event) {
+                          return _vm.editTask(task.id)
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "fa fa-plus" })]
                   )
                 ])
               ])
@@ -19716,6 +19778,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
+        _c("td", [_vm._v("Name")]),
         _c("td", [_vm._v("Name")]),
         _c("td", [_vm._v("Priority")]),
         _c("td", [_vm._v("Due In")]),

@@ -10,17 +10,14 @@ use Illuminate\Support\Facades\View;
 class TaskFighterController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
         $tasks = TaskFighterModel::latest()->get();
         $title = "Tasks";
-        $data = ['title' => $title, 'message' => $tasks];
+        $data = ['title' => $title, 'handle_data' => $tasks, 'message' => 'Loaded successfully...'];
         return response()->json($data);
-
     }
 
     /**
@@ -34,10 +31,9 @@ class TaskFighterController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
@@ -46,7 +42,7 @@ class TaskFighterController extends Controller
         $task->priority =  $request->priority;
         $task->dueIn    =  $request->dueIn;
         $task->save();
-        return 'created';
+        return response()->json(['message'=>'Task Created Successfully!!!']);
 
     }
 
@@ -58,7 +54,7 @@ class TaskFighterController extends Controller
      */
     public function show($id)
     {
-        //
+        $ggg = "lll";
     }
 
     /**
@@ -85,17 +81,21 @@ class TaskFighterController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id)
     {
         $tasks = TaskFighterModel::find($id);
         $tasks->delete();
         return response()->json(['message'=>'Task Deleted Successfully!!!']);
+
     }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
 
     public function tickItem(){
         $tasks = TaskFighterModel::get();

@@ -12,14 +12,14 @@
 */
 
 
-Route::get('/', function() {
-    return redirect('/tasks');
+Route::get('/tasks', function () {
+    return view('tasks.tasks');
 });
-Route::view('/', 'tasks.tasks')->name('tasks');
-
-Route::get('tasks','TaskFighterController@index');
-Route::get('/tasks/{id}','TaskFighterController@destroy');
-Route::delete('/tasks/{id}','TaskFighterController@destroy');
-Route::get('/list/tick','TaskFighterController@tickItem');
-
+Route::redirect('/', '/tasks');
+Route::prefix('api')->group(function() {
+    Route::resource('tasks', 'TaskFighterController');
+    Route::get('/tasks','TaskFighterController@index')->name('tasks');
+    Route::get('/list/tick','TaskFighterController@tickItem');
+    Route::get('/deleteTask/{id}','TaskFighterController@destroy');
+});
 

@@ -3,8 +3,9 @@
 
         <div id="app">
             <div class="card">
-            <tasks></tasks>
+            <tasks homed-route="{{ route('tasks') }}"></tasks>
             </div>
+
             <div class="card-footer">
                 <div class="btn btn-danger">Back</div>
             </div>
