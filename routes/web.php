@@ -21,5 +21,6 @@ Route::prefix('api')->group(function() {
     Route::get('/tasks','TaskFighterController@index')->name('tasks');
     Route::get('/list/tick','TaskFighterController@tickItem');
     Route::get('/deleteTask/{id}','TaskFighterController@destroy');
+
 });
 

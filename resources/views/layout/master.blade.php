@@ -43,7 +43,11 @@
 
         </div>
 
-        @yield('content')
+
+        <div id="app">
+            @yield('content')
+        </div>
+
 
     </main>
     <script src="{{ asset('js/app.js') }}"></script>

@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class CreateTasksTable extends Migration
 {
@@ -18,7 +19,8 @@ class CreateTasksTable extends Migration
             $table->text('name');
             $table->smallInteger('priority')->default(50);
             $table->smallInteger('dueIn')->default(10);
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->default(DB::raw('NULL ON UPDATE CURRENT_TIMESTAMP'))->nullable();
         });
     }
 

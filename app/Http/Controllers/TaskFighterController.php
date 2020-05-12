@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\TaskFighter;
 use App\TaskFighterModel;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Validator;
 
 class TaskFighterController extends Controller
 {
@@ -25,9 +25,9 @@ class TaskFighterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+
     }
 
     /**
@@ -37,12 +37,26 @@ class TaskFighterController extends Controller
      */
     public function store(Request $request)
     {
-        $task = new TaskFighterModel();
-        $task->name     =  $request->name;
-        $task->priority =  $request->priority;
-        $task->dueIn    =  $request->dueIn;
-        $task->save();
-        return response()->json(['message'=>'Task Created Successfully!!!']);
+        $data =  $request->all();
+        $rules = [
+            'name'     => 'required|unique:tasks|max:500',
+            'priority' => 'required|numeric|min:0|not_in:0',
+            'dueIn'    => 'required|numeric|min:0|not_in:0'
+        ];
+
+        $validator = Validator::make($data, $rules);
+        if ($validator->fails()) {
+            $messages   = $validator->errors()->first();
+            return response()->json(['message' => $messages,'error'=> true]);
+        }
+        else{
+            $task = new TaskFighterModel();
+            $task->name         = $data['name'];
+            $task->priority     = $data['priority'];
+            $task->dueIn        = $data['dueIn'];
+            $task->save();
+            return response()->json(['message' => 'Task Created Successfully!!!']);
+        }
 
     }
 
@@ -54,7 +68,7 @@ class TaskFighterController extends Controller
      */
     public function show($id)
     {
-        $ggg = "lll";
+
     }
 
     /**
