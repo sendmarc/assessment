@@ -16,7 +16,7 @@ class TaskFighterController extends Controller
     {
         $tasks = TaskFighterModel::latest()->get();
         $title = "Tasks";
-        $data = ['title' => $title, 'handle_data' => $tasks, 'message' => 'Loaded successfully...'];
+        $data = ['title' => $title, 'handle_data' => $tasks];
         return response()->json($data);
     }
 
