@@ -17,4 +17,24 @@ class TaskTest extends TestCase
     {
         $this->assertTrue(true);
     }
+
+    public function list_tasks()
+    {
+
+    }
+
+    public function add_tasks()
+    {
+
+    }
+
+    public function delete_tasks()
+    {
+
+    }
+
+    public function tick_tasks()
+    {
+
+    }
 }

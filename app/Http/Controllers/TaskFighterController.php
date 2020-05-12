@@ -39,8 +39,8 @@ class TaskFighterController extends Controller
     {
         $data =  $request->all();
         $rules = [
-            'name'     => 'required|unique:tasks|max:500',
-            'priority' => 'required|numeric|min:0|not_in:0',
+            'name'     => 'required|unique:tasks|max:200',
+            'priority' => 'required|numeric|min:0|not_in:0|max:1000',
             'dueIn'    => 'required|numeric|min:0|not_in:0'
         ];
 

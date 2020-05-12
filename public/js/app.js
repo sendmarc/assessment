@@ -2009,6 +2009,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2066,6 +2067,9 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (err) {
         return console.error(err);
       });
+    },
+    clearForm: function clearForm() {
+      $('#taskAdd')[0].reset();
     },
     // editTask(id){
     //     axios.get('api/task/'+id)
@@ -19816,7 +19820,29 @@ var render = function() {
           }
         }
       },
-      [_vm._m(0), _vm._v(" "), _vm._m(1)]
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", [
+          _c("div", { staticClass: "input-group-btn" }, [
+            _vm._m(1),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "btn btn-secondary",
+                attrs: { title: "CLEAR" },
+                on: {
+                  click: function($event) {
+                    return _vm.clearForm()
+                  }
+                }
+              },
+              [_c("i", { staticClass: "fa fa-refresh" })]
+            )
+          ])
+        ])
+      ]
     ),
     _vm._v(" "),
     _vm.tasks.length
@@ -19913,15 +19939,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("div", { staticClass: "input-group-btn" }, [
-        _c(
-          "button",
-          { staticClass: "btn btn-success", attrs: { type: "submit" } },
-          [_c("i", { staticClass: "fa fa-plus" })]
-        )
-      ])
-    ])
+    return _c(
+      "button",
+      { staticClass: "btn btn-success", attrs: { type: "submit" } },
+      [_c("i", { staticClass: "fa fa-plus" })]
+    )
   },
   function() {
     var _vm = this

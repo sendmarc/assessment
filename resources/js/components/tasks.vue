@@ -14,6 +14,7 @@
                 <div>
                     <div class="input-group-btn">
                         <button type="submit" class="btn btn-success"><i class="fa fa-plus"></i></button>
+                        <div class="btn btn-secondary" title="CLEAR" @click="clearForm()"><i class="fa fa-refresh"></i></div>
                     </div>
                 </div>
 
@@ -109,7 +110,9 @@
                     })
                     .catch((err) => console.error(err));
             },
-
+            clearForm(){
+                $('#taskAdd')[0].reset();
+            },
             // editTask(id){
             //     axios.get('api/task/'+id)
             //         .then((response) => {
