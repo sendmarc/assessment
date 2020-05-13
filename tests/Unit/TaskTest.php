@@ -2,12 +2,14 @@
 
 namespace Tests\Unit;
 
+use App\TaskFighterModel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class TaskTest extends TestCase
 {
+//    use RefreshDatabase;
     /**
      * A basic unit test example.
      *
@@ -18,22 +20,33 @@ class TaskTest extends TestCase
         $this->assertTrue(true);
     }
 
-    public function list_tasks()
+    public function testListTasksRedirectsToTasks()
     {
+       $this->get('/')->assertRedirect('/tasks');
+    }
+
+    public function testCanCreateTask()
+    {
+        $this->withoutExceptionHandling();
+
+        $formData = [
+            'name'     => 'Task',
+            'priority' => 10,
+            'dueIn'    => 65
+            ];
+        $response = $this->post(route('tasks.store'),$formData);
+        $status = $response->getStatusCode();
+        $this->assertEquals(200,$status,$response->getContent());
 
     }
 
-    public function add_tasks()
+    public function testCanDeleteTask()
     {
-
+        $this->get(route('delete',1))
+            ->assertStatus(200);
     }
 
-    public function delete_tasks()
-    {
-
-    }
-
-    public function tick_tasks()
+    public function testCanCauseTaskToTick()
     {
 
     }

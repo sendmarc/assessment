@@ -47,7 +47,7 @@ class TaskFighterController extends Controller
         $validator = Validator::make($data, $rules);
         if ($validator->fails()) {
             $messages   = $validator->errors()->first();
-            return response()->json(['message' => $messages,'error'=> true]);
+            return response()->json(['message' => $messages,'error'=> true],500);
         }
         else{
             $task = new TaskFighterModel();
