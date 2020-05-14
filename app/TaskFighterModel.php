@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TaskFighterModel extends Model
 {
-//    use SoftDeletes;
+
     protected $table = 'tasks';
     public $timestamps = true;
     protected $fillable =['name','priority','dueIn'];

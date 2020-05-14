@@ -23,48 +23,60 @@ class TaskFighter
 
     public function tick()
     {
-        if ($this->name != 'Get Older') {
-            if ($this->priority < 100) {
-                if ($this->name != 'Breathe') {
-                    $this->priority = $this->priority + 1;
-                }
-            }
-            if ($this->name == 'Complete Assessment') {
-                if ($this->dueIn < 11) {
-                    if ($this->priority < 100) {
-                        $this->priority = $this->priority + 1;
-                    }
-                }
-                if ($this->dueIn < 6) {
-                    if ($this->priority < 100) {
-                        $this->priority = $this->priority + 1;
-                    }
-                }
-            }
-        } else {
-            if ($this->priority > 0) {
-                $this->priority = $this->priority - 1;
-            }
-        }
-        if ($this->name != 'Breathe') {
-            $this->dueIn = $this->dueIn - 1;
-        }
-        if ($this->dueIn < 0) {
-            if ($this->name != 'Get Older') {
-                if ($this->name != 'Complete Assessment') {
-                    if ($this->priority < 100) {
-                        if ($this->name != 'Breathe') {
-                            $this->priority = $this->priority + 1;
-                        }
-                    }
-                } else {
-                    $this->priority = $this->priority - $this->priority;
-                }
-            } else {
+        switch ($this->name){
+            case 'Get Older':
                 if ($this->priority > 0) {
                     $this->priority = $this->priority - 1;
                 }
-            }
+                if($this->dueIn < 0){
+                    $this->priority = $this->priority + 2;
+                }
+                else{
+                    $this->dueIn = $this->dueIn - 1;
+                }
+
+                break;
+            case  'Breathe':
+                //never has to be completed or increase in priority
+                break;
+
+            case  'Complete Assessment':
+                $this->dueIn = $this->dueIn - 1;
+                if($this->dueIn <= 10 && $this->dueIn > 0){
+                    if($this->dueIn >= 5){
+                        $this->priority = $this->priority + 2;
+                    }
+                    else{
+                        $this->priority = $this->priority + 3;
+                    }
+                }
+                elseif($this->dueIn < 0){
+                    $this->priority = 0;
+                }
+                else{
+                    if ($this->priority < 100) {
+                        $this->priority = $this->priority + 1;
+                    }
+                    else{
+                        $this->dueIn = $this->dueIn - 1;
+                    }
+                }
+                break;
+            default:
+                    if($this->dueIn <= 0){
+                        if($this->priority < 100)
+                        {
+                            $this->priority = $this->priority + 2;
+                        }
+                        else{
+                            $this->dueIn = $this->dueIn - 1;
+                        }
+                    }
+                    else{
+                        $this->dueIn = $this->dueIn - 1;
+                        $this->priority = $this->priority + 1;
+                    }
+                break;
         }
     }
 }
