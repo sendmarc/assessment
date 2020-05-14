@@ -75,7 +75,7 @@
                     dueIn: 0,
                 },
                 task_id: '',
-                title : "Tasks List",
+                title : "Task List",
                 edit:false,
                 pagination:{},
 
