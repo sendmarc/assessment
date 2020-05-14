@@ -42,13 +42,8 @@ class TaskFighter
 
             case  'Complete Assessment':
                 $this->dueIn = $this->dueIn - 1;
-                if($this->dueIn <= 10 && $this->dueIn > 0){
-                    if($this->dueIn >= 5){
-                        $this->priority = $this->priority + 2;
-                    }
-                    else{
-                        $this->priority = $this->priority + 3;
-                    }
+                if($this->dueIn >0  && $this->dueIn < 11){
+                    $this->priority = ($this->dueIn >= 5) ? $this->priority + 2:$this->priority + 3;
                 }
                 elseif($this->dueIn < 0){
                     $this->priority = 0;
@@ -78,5 +73,6 @@ class TaskFighter
                     }
                 break;
         }
+
     }
 }
