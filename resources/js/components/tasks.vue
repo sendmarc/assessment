@@ -1,25 +1,30 @@
 <template>
     <div class="card-body">
-        <h4 class="card-header" placeholder="Title" v-model="title">{{ title }}</h4>
-        <div class="mb-4 mt-4">
-            <div class="btn btn-primary" title="TICK" @click="taskTick()"><i class="fa fa-check"></i></div>
-        </div>
-        <form id="taskAdd" action="#" @submit.prevent="createTask()">
 
+
+        <form id="taskAdd" action="#" @submit.prevent="createTask()">
+                <div class="bg-info p-2">
+                    Create New Task
+                </div>
                 <div class="form-group d-flex">
                     <input type="text" placeholder="name" name="name" class="form-control" required>
                     <input type="number" placeholder="priority" name="priority" class="form-control " required>
                     <input type="number" placeholder="Due In" name="dueIn" class="form-control " required>
                 </div>
                 <div>
-                    <div class="input-group-btn">
-                        <button type="submit" class="btn btn-success"><i class="fa fa-plus"></i></button>
-                        <div class="btn btn-secondary" title="CLEAR" @click="clearForm()"><i class="fa fa-refresh"></i></div>
+                    <div class="d-flex ">
+                        <button type="submit" title="SAVE ENTRY" class="btn btn-success flex-grow-1"><i class="fa fa-plus"></i></button>
+                        <div class="btn btn-secondary flex-grow-1" title="CLEAR" @click="clearForm()"><i class="fa fa-refresh"></i></div>
                     </div>
                 </div>
 
 
         </form>
+        <h4 class="card-header mt-4" placeholder="Title" v-model="title"><i class="fa fa-list"></i> {{ title }}</h4>
+        <hr/>
+        <div class="mb-4 mt-4">
+            <div class="btn btn-primary" title="TICK" @click="taskTick()"><i class="fa fa-check"></i></div>
+        </div>
 
         <div v-if="tasks.length">
             <table class="table table-striped">
@@ -70,7 +75,7 @@
                     dueIn: 0,
                 },
                 task_id: '',
-                title : "Tasks",
+                title : "Tasks List",
                 edit:false,
                 pagination:{},
 

@@ -2010,6 +2010,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2021,7 +2026,7 @@ __webpack_require__.r(__webpack_exports__);
         dueIn: 0
       },
       task_id: '',
-      title: "Tasks",
+      title: "Tasks List",
       edit: false,
       pagination: {}
     };
@@ -19778,9 +19783,49 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "card-body" }, [
     _c(
+      "form",
+      {
+        attrs: { id: "taskAdd", action: "#" },
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            return _vm.createTask()
+          }
+        }
+      },
+      [
+        _c("div", { staticClass: "bg-info p-2" }, [
+          _vm._v("\n                    Create New Task\n                ")
+        ]),
+        _vm._v(" "),
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", [
+          _c("div", { staticClass: "d-flex " }, [
+            _vm._m(1),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "btn btn-secondary flex-grow-1",
+                attrs: { title: "CLEAR" },
+                on: {
+                  click: function($event) {
+                    return _vm.clearForm()
+                  }
+                }
+              },
+              [_c("i", { staticClass: "fa fa-refresh" })]
+            )
+          ])
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
       "h4",
       {
-        staticClass: "card-header",
+        staticClass: "card-header mt-4",
         attrs: { placeholder: "Title" },
         model: {
           value: _vm.title,
@@ -19790,8 +19835,10 @@ var render = function() {
           expression: "title"
         }
       },
-      [_vm._v(_vm._s(_vm.title))]
+      [_c("i", { staticClass: "fa fa-list" }), _vm._v(" " + _vm._s(_vm.title))]
     ),
+    _vm._v(" "),
+    _c("hr"),
     _vm._v(" "),
     _c("div", { staticClass: "mb-4 mt-4" }, [
       _c(
@@ -19808,42 +19855,6 @@ var render = function() {
         [_c("i", { staticClass: "fa fa-check" })]
       )
     ]),
-    _vm._v(" "),
-    _c(
-      "form",
-      {
-        attrs: { id: "taskAdd", action: "#" },
-        on: {
-          submit: function($event) {
-            $event.preventDefault()
-            return _vm.createTask()
-          }
-        }
-      },
-      [
-        _vm._m(0),
-        _vm._v(" "),
-        _c("div", [
-          _c("div", { staticClass: "input-group-btn" }, [
-            _vm._m(1),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "btn btn-secondary",
-                attrs: { title: "CLEAR" },
-                on: {
-                  click: function($event) {
-                    return _vm.clearForm()
-                  }
-                }
-              },
-              [_c("i", { staticClass: "fa fa-refresh" })]
-            )
-          ])
-        ])
-      ]
-    ),
     _vm._v(" "),
     _vm.tasks.length
       ? _c("div", [
@@ -19941,7 +19952,10 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "button",
-      { staticClass: "btn btn-success", attrs: { type: "submit" } },
+      {
+        staticClass: "btn btn-success flex-grow-1",
+        attrs: { type: "submit", title: "SAVE ENTRY" }
+      },
       [_c("i", { staticClass: "fa fa-plus" })]
     )
   },

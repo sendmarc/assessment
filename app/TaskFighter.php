@@ -25,14 +25,9 @@ class TaskFighter
     {
         switch ($this->name){
             case 'Get Older':
-                if ($this->priority > 0) {
-                    $this->priority = $this->priority - 1;
-                }
-                if($this->dueIn < 0){
-                    $this->priority = $this->priority + 2;
-                }
-                else{
-                    $this->dueIn = $this->dueIn - 1;
+                if($this->priority < 100) {
+                    $this->priority -=  1;
+                    $this->dueIn -= 1;
                 }
 
                 break;
@@ -41,36 +36,29 @@ class TaskFighter
                 break;
 
             case  'Complete Assessment':
-                $this->dueIn = $this->dueIn - 1;
-                if($this->dueIn >0  && $this->dueIn < 11){
-                    $this->priority = ($this->dueIn >= 5) ? $this->priority + 2:$this->priority + 3;
+                if($this->dueIn > 0  && $this->dueIn < 11){
+                    $this->priority += ($this->dueIn > 5) ? 2 : 3;
+                    $this->dueIn = $this->dueIn - 1;
                 }
                 elseif($this->dueIn < 0){
                     $this->priority = 0;
+                    $this->dueIn -= 1;
                 }
-                else{
-                    if ($this->priority < 100) {
-                        $this->priority = $this->priority + 1;
-                    }
-                    else{
-                        $this->dueIn = $this->dueIn - 1;
-                    }
+                elseif($this->priority < 100) {
+                    $this->priority +=  1;
+                    $this->dueIn -= 1;
                 }
+
                 break;
             default:
-                    if($this->dueIn <= 0){
-                        if($this->priority < 100)
-                        {
-                            $this->priority = $this->priority + 2;
-                        }
-                        else{
-                            $this->dueIn = $this->dueIn - 1;
-                        }
+                    if($this->dueIn < 0 && $this->priority < 100){
+                       $this->priority += 2;
                     }
                     else{
-                        $this->dueIn = $this->dueIn - 1;
-                        $this->priority = $this->priority + 1;
+                        if($this->priority < 100)
+                            $this->priority += 1;
                     }
+                    $this->dueIn -= 1;
                 break;
         }
 
