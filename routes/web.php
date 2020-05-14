@@ -19,7 +19,7 @@ Route::redirect('/', '/tasks');
 Route::prefix('api')->group(function() {
     Route::resource('tasks', 'TaskFighterController');
     Route::get('/tasks','TaskFighterController@index')->name('tasks');
-    Route::get('/list/tick','TaskFighterController@tickItem');
+    Route::get('/list/tick','TaskFighterController@tickItem')->name('task-tick');
     Route::get('/deleteTask/{id}','TaskFighterController@destroy')->name('delete');
 
 });

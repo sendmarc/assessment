@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\TaskFighter;
 use App\TaskFighterModel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -9,7 +10,20 @@ use Tests\TestCase;
 
 class TaskTest extends TestCase
 {
-//    use RefreshDatabase;
+
+    use RefreshDatabase;
+    protected $tasks;
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->tasks = TaskFighterModel::create([
+            'name'=> 'Test',
+            'priority' => 100,
+            'dueIn'    => 365
+        ]);
+
+    }
+
     /**
      * A basic unit test example.
      *
@@ -27,27 +41,29 @@ class TaskTest extends TestCase
 
     public function testCanCreateTask()
     {
+
         $this->withoutExceptionHandling();
-
         $formData = [
-            'name'     => 'Task',
-            'priority' => 10,
-            'dueIn'    => 65
+            'name'     => 'Test 1',
+            'priority' => 100,
+            'dueIn'    => 365
             ];
-        $response = $this->post(route('tasks.store'),$formData);
-        $status = $response->getStatusCode();
-        $this->assertEquals(200,$status,$response->getContent());
 
+        $this->post(route('tasks.store'),$formData)
+            ->assertOk()
+            ->assertJson(['message'=>"Task Created Successfully!!!"]);
     }
 
     public function testCanDeleteTask()
     {
-        $this->get(route('delete',1))
-            ->assertStatus(200);
+        $task_id = $this->tasks->id;
+        $this->get(route('delete',$task_id))
+        ->assertOk();
     }
 
     public function testCanCauseTaskToTick()
     {
-
+        $this->get(route('task-tick'))
+            ->assertOk();
     }
 }
