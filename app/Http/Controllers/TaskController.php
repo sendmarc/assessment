@@ -13,9 +13,31 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Task::all();
+        switch (strtolower($request->query('sort'))) {
+            case 'name':
+                $key = 'name';
+                break;
+            case 'priority':
+                $key = 'priority';
+                break;
+            case 'duein':
+            default:
+                $key = 'dueIn';
+                break;
+        }
+        return $request->has('desc') ? Task::all()->sortByDesc($key) : Task::all()->sortBy($key);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexview(Request $request)
+    {
+        return view('task')->with('tasks', $this->index($request));
     }
 
     /**

@@ -13,13 +13,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/web', function () {
-    return view('task')->with('tasks', App\Task::all());
-});
-
-Route::get('/', function () {
-    return redirect('/tasks');
-});
+Route::get('/', 'TaskController@indexview');
 
 Route::get('/tasks', 'TaskController@index');
 
