@@ -1,0 +1,44 @@
+[24-Jun-2020 10:53:23 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method PHPUnit\TextUI\TestRunner::run() in C:\Users\lucas\scoop\persist\composer\home\vendor\phpunit\phpunit\src\TextUI\Command.php:108
+Stack trace:
+#0 C:\Users\lucas\scoop\persist\composer\home\vendor\phpunit\phpunit\src\TextUI\Command.php(68): PHPUnit\TextUI\Command->run()
+#1 C:\Users\lucas\scoop\persist\composer\home\vendor\phpunit\phpunit\phpunit(61): PHPUnit\TextUI\Command::main()
+#2 {main}
+  thrown in C:\Users\lucas\scoop\persist\composer\home\vendor\phpunit\phpunit\src\TextUI\Command.php on line 108
+[24-Jun-2020 10:57:21 UTC] PHP Fatal error:  Uncaught TypeError: Argument 2 passed to PHPUnit\Runner\BaseTestRunner::getTest() must be of the type string, array given, called in C:\Users\lucas\scoop\persist\composer\home\vendor\phpunit\phpunit\src\TextUI\Command.php on line 85 and defined in C:\Users\lucas\Documents\SmallProjects\assessment\vendor\phpunit\phpunit\src\Runner\BaseTestRunner.php:84
+Stack trace:
+#0 C:\Users\lucas\scoop\persist\composer\home\vendor\phpunit\phpunit\src\TextUI\Command.php(85): PHPUnit\Runner\BaseTestRunner->getTest()
+#1 C:\Users\lucas\scoop\persist\composer\home\vendor\phpunit\phpunit\src\TextUI\Command.php(68): PHPUnit\TextUI\Command->run()
+#2 C:\Users\lucas\scoop\persist\composer\home\vendor\phpunit\phpunit\phpunit(61): PHPUnit\TextUI\Command::main()
+#3 {main}
+  thrown in C:\Users\lucas\Documents\SmallProjects\assessment\vendor\phpunit\phpunit\src\Runner\BaseTestRunner.php on line 84
+[24-Jun-2020 10:57:43 UTC] PHP Fatal error:  Uncaught TypeError: Argument 2 passed to PHPUnit\Runner\BaseTestRunner::getTest() must be of the type string, array given, called in C:\Users\lucas\scoop\persist\composer\home\vendor\phpunit\phpunit\src\TextUI\Command.php on line 85 and defined in C:\Users\lucas\Documents\SmallProjects\assessment\vendor\phpunit\phpunit\src\Runner\BaseTestRunner.php:84
+Stack trace:
+#0 C:\Users\lucas\scoop\persist\composer\home\vendor\phpunit\phpunit\src\TextUI\Command.php(85): PHPUnit\Runner\BaseTestRunner->getTest()
+#1 C:\Users\lucas\scoop\persist\composer\home\vendor\phpunit\phpunit\src\TextUI\Command.php(68): PHPUnit\TextUI\Command->run()
+#2 C:\Users\lucas\scoop\persist\composer\home\vendor\phpunit\phpunit\phpunit(61): PHPUnit\TextUI\Command::main()
+#3 {main}
+  thrown in C:\Users\lucas\Documents\SmallProjects\assessment\vendor\phpunit\phpunit\src\Runner\BaseTestRunner.php on line 84
+[24-Jun-2020 10:57:47 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method PHPUnit\TextUI\TestRunner::run() in C:\Users\lucas\scoop\persist\composer\home\vendor\phpunit\phpunit\src\TextUI\Command.php:108
+Stack trace:
+#0 C:\Users\lucas\scoop\persist\composer\home\vendor\phpunit\phpunit\src\TextUI\Command.php(68): PHPUnit\TextUI\Command->run()
+#1 C:\Users\lucas\scoop\persist\composer\home\vendor\phpunit\phpunit\phpunit(61): PHPUnit\TextUI\Command::main()
+#2 {main}
+  thrown in C:\Users\lucas\scoop\persist\composer\home\vendor\phpunit\phpunit\src\TextUI\Command.php on line 108
+[24-Jun-2020 10:59:59 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method PHPUnit\TextUI\TestRunner::run() in C:\Users\lucas\scoop\persist\composer\home\vendor\phpunit\phpunit\src\TextUI\Command.php:108
+Stack trace:
+#0 C:\Users\lucas\scoop\persist\composer\home\vendor\phpunit\phpunit\src\TextUI\Command.php(68): PHPUnit\TextUI\Command->run()
+#1 C:\Users\lucas\scoop\persist\composer\home\vendor\phpunit\phpunit\phpunit(61): PHPUnit\TextUI\Command::main()
+#2 {main}
+  thrown in C:\Users\lucas\scoop\persist\composer\home\vendor\phpunit\phpunit\src\TextUI\Command.php on line 108
+[24-Jun-2020 11:04:19 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method PHPUnit\TextUI\TestRunner::run() in C:\Users\lucas\scoop\persist\composer\home\vendor\phpunit\phpunit\src\TextUI\Command.php:108
+Stack trace:
+#0 C:\Users\lucas\scoop\persist\composer\home\vendor\phpunit\phpunit\src\TextUI\Command.php(68): PHPUnit\TextUI\Command->run()
+#1 C:\Users\lucas\scoop\persist\composer\home\vendor\phpunit\phpunit\phpunit(61): PHPUnit\TextUI\Command::main()
+#2 {main}
+  thrown in C:\Users\lucas\scoop\persist\composer\home\vendor\phpunit\phpunit\src\TextUI\Command.php on line 108
+[24-Jun-2020 11:13:03 UTC] PHP Fatal error:  Uncaught Error: Call to undefined method PHPUnit\TextUI\TestRunner::run() in C:\Users\lucas\scoop\persist\composer\home\vendor\phpunit\phpunit\src\TextUI\Command.php:108
+Stack trace:
+#0 C:\Users\lucas\scoop\persist\composer\home\vendor\phpunit\phpunit\src\TextUI\Command.php(68): PHPUnit\TextUI\Command->run()
+#1 C:\Users\lucas\scoop\persist\composer\home\vendor\phpunit\phpunit\phpunit(61): PHPUnit\TextUI\Command::main()
+#2 {main}
+  thrown in C:\Users\lucas\scoop\persist\composer\home\vendor\phpunit\phpunit\src\TextUI\Command.php on line 108
