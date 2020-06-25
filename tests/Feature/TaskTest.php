@@ -45,6 +45,13 @@ class TaskTest extends TestCase
         $response->assertOk();
     }
 
+    public function testTaskTick()
+    {
+        $response = $this->get('/api/list/tick');
+        $response->assertOk();
+        $response->assertJsonStructure(['*' => $this->taskStructure]);
+    }
+
     private function postTask() {
         return $this->post('/api/tasks', $this->taskData);
     }
