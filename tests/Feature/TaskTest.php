@@ -36,6 +36,15 @@ class TaskTest extends TestCase
         $response->assertOk();
     }
 
+    public function testTaskDelete()
+    {
+        $this->taskData['name'] = 'KG'.rand(1, 4);
+        $newTask = $this->postTask();
+        $newTaskResponse = $newTask->decodeResponseJson();
+        $response = $this->delete('/api/tasks/' . $newTaskResponse['id'], $this->taskData);
+        $response->assertOk();
+    }
+
     private function postTask() {
         return $this->post('/api/tasks', $this->taskData);
     }
