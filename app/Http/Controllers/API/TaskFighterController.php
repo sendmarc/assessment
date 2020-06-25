@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Task;
+use Illuminate\Support\Facades\Log;
 
 class TaskFighterController extends Controller
 {
@@ -46,6 +47,25 @@ class TaskFighterController extends Controller
                 return $data;
             }
             return response('Could not edit task', 500);
+        } catch (\Exception $exception) {
+            return response($exception->getMessage(), 500);
+        }
+    }
+
+    /**
+     *  Delete a task
+     *
+     * @param $id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        try {
+            if (Task::where('id', $id)->delete()) {
+                Log::info(sprintf('Deleting task id %s', $id));
+                return response('Task deleted');
+            }
+            return response('No task to delete', 500);
         } catch (\Exception $exception) {
             return response($exception->getMessage(), 500);
         }
