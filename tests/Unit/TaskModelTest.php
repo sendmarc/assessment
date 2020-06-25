@@ -15,7 +15,7 @@ class TaskModelTest extends TestCase
      *
      * @return void
      */
-    public function testCreateAndStoreTask()
+    public function testCreateStoreAndDeleteTask()
     {
         $task = factory(Task::class)->create();
         $this->assertInstanceOf(Task::class, $task);
@@ -30,6 +30,7 @@ class TaskModelTest extends TestCase
         $name = $task->name;
 
         $this->assertEquals(Task::find($id)->fresh()->name, $name);
+        $this->assertTrue($task->delete());
     }
 
     public function testBreathe()

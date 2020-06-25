@@ -22,7 +22,6 @@ class TaskController extends Controller
             case 'priority':
                 $key = 'priority';
                 break;
-            case 'duein':
             default:
                 $key = 'dueIn';
                 break;
@@ -60,9 +59,17 @@ class TaskController extends Controller
     {
         $task = new Task;
 
+        $validatedData = $request->validate([
+            'name' => 'bail|required|unique:tasks|max:255|regex:/^[a-zA-Z0-9 \.]+$/',
+            'dueIn' => 'integer|between:0,100',
+            'priority' => 'integer|between:0,100',
+        ]);
+
         $task->name = $request->name;
-        $task->dueIn = $request->dueIn;
-        $task->priority = $request->priority;
+        if ($request->dueIn)
+            $task->dueIn = $request->dueIn;
+        if ($request->priority)
+            $task->priority = $request->priority;
 
         $task->save();
 

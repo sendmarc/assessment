@@ -26,6 +26,10 @@
             margin: 0;
         }
 
+        .active {
+            color: #000;
+            background-color: #ececec;
+        }
 
         .header {
             background-color: #fff;
@@ -82,33 +86,34 @@
 </head>
 
 <body>
-    <div class="header position-sticky">
-        <div class="title m-b-md">
-            TaskFighter
-            <img id='ticker' src="{{asset('storage/tick.png')}}" v-on:click="tick" />
+    <div id="app">
+        <div class="header position-sticky">
+            <div class="title m-b-md">
+                TaskFighter
+                <img src="{{asset('storage/tick.png')}}" v-on:click="tick" />
+            </div>
         </div>
+        <table>
+            <thead>
+                <tr id='table-header'>
+                    <th v-on:click='sort("name")' id='th-name' v-bind:class="[ currentSort == 'name'? 'active':'' ]">Task Name</th>
+                    <th v-on:click='sort("dueIn")' id='th-duein' v-bind:class="[ currentSort == 'dueIn'? 'active':'' ]">Due In (days)</th>
+                    <th v-on:click='sort("priority")' id='th-priority' v-bind:class="[ currentSort == 'priority'? 'active':'' ]">Priority</th>
+                    <th>Complete</th>
+                </tr>
+            </thead>
+            <tbody id='table-body'>
+                <tr v-for="task in sortedTasks">
+                    <td>@{{task.name}}</td>
+                    <td>@{{task.dueIn}}</td>
+                    <td>@{{task.priority}}</td>
+                    <td>
+                        <img v-on:click="complete" v-bind:id="'complete-' + task.id" src="{{asset('storage/complete.png')}}" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-    <table>
-        <thead>
-            <tr id='table-header'>
-                <th id='th-name'>Task Name</th>
-                <th id='th-due'>Due In (days)</th>
-                <th id='th-prio'>Priority</th>
-                <th>Complete</th>
-            </tr>
-        </thead>
-        <tbody id='table-body'>
-
-            @foreach($tasks as $task)
-            <tr>
-                <td>{{$task->name}}</td>
-                <td>{{$task->dueIn}}</td>
-                <td>{{$task->priority}}</td>
-                <td><img v-on:click='complete({{$task->id}})' src="{{asset('storage/complete.png')}}" /></td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
 </body>
 
 </html>

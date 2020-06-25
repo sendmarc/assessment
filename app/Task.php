@@ -26,8 +26,8 @@ class Task extends Model
      * @var array
      */
     protected $attributes = [
-        'priority' => 100,
-        'dueIn' => 0,
+        'priority' => 10,
+        'dueIn' => 7,
     ];
 
     /**

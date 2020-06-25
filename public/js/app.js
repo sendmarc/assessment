@@ -31544,34 +31544,63 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 new Vue({
-  el: '#ticker',
-  methods: {
-    tick: function tick(event) {
-      axios.get('/list/tick').then(function (data) {
-        window.location.reload(false);
-      });
-    }
-  }
-});
-new Vue({
-  el: '#table-body',
-  methods: {
-    complete: function complete(id) {
-      axios["delete"]('/tasks/' + id).then(function (data) {
-        window.location.reload(false);
-      });
-    }
-  }
-});
-new Vue({
-  el: '#table-header',
+  el: '#app',
   data: {
-    current_sort: 'dueIn'
+    tasks: [],
+    currentSort: 'dueIn',
+    currentDir: 'asc'
+  },
+  created: function created() {
+    this.fetch();
   },
   methods: {
-    sort: function sort(event) {
-      axios.get('/?sort').then(function (data) {
-        window.location.reload(false);
+    complete: function complete(event) {
+      var _this = this;
+
+      del_id = event.target.id.replace('complete-', '');
+      axios["delete"]('/tasks/' + del_id).then(function (resp) {
+        _this.tasks = _this.tasks.filter(function (task) {
+          return task.id != del_id;
+        });
+      });
+    },
+    sort: function sort(sortParam) {
+      if (sortParam == this.currentSort) {
+        this.currentDir = this.currentDir == 'asc' ? 'desc' : 'asc';
+      } else {
+        this.currentSort = sortParam;
+      }
+    },
+    tick: function tick() {
+      var _this2 = this;
+
+      axios.get('/list/tick').then(function (resp) {
+        return _this2.fetch();
+      });
+    },
+    fetch: function fetch() {
+      var _this3 = this;
+
+      axios.get('/tasks?sort=' + this.currentSort + "&" + this.currentDir).then(function (resp) {
+        _this3.tasks = Object.values(resp.data);
+
+        _this3.tasks.map(function (task) {
+          task['dueIn'] = parseInt(task['dueIn']);
+          task['priority'] = parseInt(task['priority']);
+        });
+      });
+    }
+  },
+  computed: {
+    sortedTasks: function sortedTasks() {
+      var _this4 = this;
+
+      return this.tasks.sort(function (a, b) {
+        var modifier = 1;
+        if (_this4.currentDir === 'desc') modifier = -1;
+        if (a[_this4.currentSort] < b[_this4.currentSort]) return -1 * modifier;
+        if (a[_this4.currentSort] > b[_this4.currentSort]) return 1 * modifier;
+        return 0;
       });
     }
   }
