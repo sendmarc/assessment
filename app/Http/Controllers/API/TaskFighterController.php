@@ -32,4 +32,22 @@ class TaskFighterController extends Controller
             return response($exception->getMessage(), 500);
         }
     }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
+    public function update($id)
+    {
+        try {
+            $data = request()->validate($this->rules);
+
+            if (Task::where('id', $id)->update($data)) {
+                return $data;
+            }
+            return response('Could not edit task', 500);
+        } catch (\Exception $exception) {
+            return response($exception->getMessage(), 500);
+        }
+    }
 }
