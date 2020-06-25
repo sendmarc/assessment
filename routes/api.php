@@ -18,3 +18,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::apiResources(['tasks' => 'API\TaskFighterController']);
+Route::get('list/tick', 'API\TaskFighterController@tick');
