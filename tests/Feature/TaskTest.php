@@ -27,6 +27,15 @@ class TaskTest extends TestCase
         $response->assertJsonStructure($this->taskStructure);
     }
 
+    public function testTaskEdit()
+    {
+        $newTask = $this->postTask();
+        $newTaskResponse = $newTask->decodeResponseJson();
+        sleep(1);
+        $response = $this->put('/api/tasks/' . $newTaskResponse['id'], $this->taskData);
+        $response->assertOk();
+    }
+
     private function postTask() {
         return $this->post('/api/tasks', $this->taskData);
     }
