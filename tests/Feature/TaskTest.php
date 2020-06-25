@@ -7,11 +7,6 @@ use Tests\TestCase;
 class TaskTest extends TestCase
 {
     protected $taskStructure = ['name', 'priority', 'dueIn'];
-    protected $taskData = [
-        'name' => 'KG',
-        'priority' => 4,
-        'dueIn' => 9
-    ];
 
     public function testGetTaskList()
     {
@@ -32,16 +27,15 @@ class TaskTest extends TestCase
         $newTask = $this->postTask();
         $newTaskResponse = $newTask->decodeResponseJson();
         sleep(1);
-        $response = $this->put('/api/tasks/' . $newTaskResponse['id'], $this->taskData);
+        $response = $this->put('/api/tasks/' . $newTaskResponse['id'], $this->getTaskData());
         $response->assertOk();
     }
 
     public function testTaskDelete()
     {
-        $this->taskData['name'] = 'KG'.rand(1, 4);
         $newTask = $this->postTask();
         $newTaskResponse = $newTask->decodeResponseJson();
-        $response = $this->delete('/api/tasks/' . $newTaskResponse['id'], $this->taskData);
+        $response = $this->delete('/api/tasks/' . $newTaskResponse['id'], $this->getTaskData());
         $response->assertOk();
     }
 
@@ -53,6 +47,15 @@ class TaskTest extends TestCase
     }
 
     private function postTask() {
-        return $this->post('/api/tasks', $this->taskData);
+        return $this->post('/api/tasks', $this->getTaskData());
+    }
+
+    private function getTaskData()
+    {
+        return [
+            'name' => 'KG' . rand(1, 1000),
+            'priority' => 4,
+            'dueIn' => 9
+        ];
     }
 }
