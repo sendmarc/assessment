@@ -4,6 +4,8 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Task;
+use App\TaskFighter;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class TaskFighterController extends Controller
@@ -69,5 +71,21 @@ class TaskFighterController extends Controller
         } catch (\Exception $exception) {
             return response($exception->getMessage(), 500);
         }
+    }
+
+    /**
+     *  Update task priority and dueIn
+     *
+     * @return Task[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function tick()
+    {
+        $tasks = DB::table('tasks')->select('*')->get();
+        foreach ($tasks as $task) {
+            $taskFighter = new TaskFighter($task->name, $task->priority, $task->dueIn);
+            $taskFighter->tick();
+            Task::where('id', $task->id)->update(['priority' => $taskFighter->priority, 'dueIn' => $taskFighter->dueIn]);
+        }
+        return Task::all();
     }
 }
