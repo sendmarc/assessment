@@ -46,6 +46,12 @@ class TaskTest extends TestCase
         $response->assertJsonStructure(['*' => $this->taskStructure]);
     }
 
+    public function testFrontEndTaskList()
+    {
+        $response = $this->get('/');
+        $response->assertOk();
+    }
+
     private function postTask() {
         return $this->post('/api/tasks', $this->getTaskData());
     }
