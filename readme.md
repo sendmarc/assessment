@@ -19,12 +19,12 @@ Setup the environment by:
 Please complete the tasks below. It would be helpful for you to commit your work after each step. When finished create a pull request. Once the pull request is made (or for help), please email your contact person at Sendmarc.
 
 1. Change the code in `routes/web.php` to use Controllers, Requests, and Models. Think RESTful/Resourceful API architecture.
-2. Produce a basic interface to list the tasks with the name, priority, and number of days until due.
+2. Produce a **basic** interface to list the tasks with the name, priority, and number of days until due.
 3. Implement unit tests for `app/TaskFighter.php`.
-4. Refactor the monstrous code in the `app/TaskFighter.php` class.
+4. Refactor the bad code in the `app/TaskFighter.php` class into something good.
 5. Add a button on the interface to cause TaskFighter to 'tick'.
 
-Bonus points are awarded for the following, optional, tasks:
+Bonus points are awarded for the following, **optional**, tasks:
 
 1. Using VueJS to build the listing as a single page app.
 3. Any additional usability features.
