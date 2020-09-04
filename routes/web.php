@@ -11,31 +11,17 @@
 |
 */
 
-Route::get('/', function() {
-    return redirect('/tasks');
+use app\Http\Controllers\TaskFighterController;
+use App\TaskFighter;
+
+Route::get('/', function () {
+    return view('welcome');
 });
 
-Route::get('/tasks', function () {
-    $tasks = DB::table('tasks')->select('*')->get();
-    return $tasks;
-});
+Route::get('/tasks', 'TaskFighterController')->name('home');
 
-Route::post('/tasks', function(\Illuminate\Http\Request $request) {
-    DB::insert("insert into tasks set name = '{$request->name}', priority = '{$request->priority}', dueIn = '{$request->dueIn}'");
-    return 'created';
-});
+Route::post('/tasks', 'TaskFighterController')->name('create');
 
-Route::delete('/tasks/{id}', function(\Illuminate\Http\Request $request) {
-    DB::delete("delete from tasks where id = '{$request->id}'");
-    return 'deleted';
-});
+Route::delete('/tasks/{id}', 'TaskFighterController')->name('delete');
 
-Route::get('/list/tick', function() {
-    $tasks = DB::table('tasks')->select('*')->get();
-    foreach ($tasks as $task) {
-        $taskFighter = new \App\TaskFighter($task->name, $task->priority, $task->dueIn);
-        $taskFighter->tick();
-        DB::update("update tasks set priority = '{$taskFighter->priority}', dueIn = '{$taskFighter->dueIn}' where id = '{$task->id}'");
-    }
-    return 'tick';
-});
+Route::get('/list/tick', 'TaskFighterController')->name('tick');
