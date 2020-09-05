@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\DB;
 
 class TaskFighterRepository {
 
-    private function selectAll(){
+    public function selectAll(){
         $tasks = DB::table('tasks')->select('*')->get();
         return $tasks;
     }

@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -11,17 +12,16 @@
 |
 */
 
-use app\Http\Controllers\TaskFighterController;
-use App\TaskFighter;
+Route::get('/', 'TaskFighter\TaskFighterController@home');
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/tasks', 'TaskFighter\TaskFighterController@fetchData');
 
-Route::get('/tasks', 'TaskFighterController')->name('home');
+Route::post('/tasks', 'TaskFighter\TaskFighterController@create');
 
-Route::post('/tasks', 'TaskFighterController')->name('create');
+Route::delete('/tasks/{id}', 'TaskFighter\TaskFighterController@delete');
 
-Route::delete('/tasks/{id}', 'TaskFighterController')->name('delete');
+Route::get('/list/tick', 'TaskFighter\TaskFighterController@tick');
 
-Route::get('/list/tick', 'TaskFighterController')->name('tick');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
