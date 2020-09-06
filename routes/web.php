@@ -23,6 +23,4 @@ Route::post('/tasks', 'TaskFighterController@create');
 
 Route::delete('/tasks/{id}', 'TaskFighterController@delete');
 
-Route::get('/list/tick', 'TaskFighterController@tick');
 
-Route::get('/home', 'HomeController@index')->name('home');

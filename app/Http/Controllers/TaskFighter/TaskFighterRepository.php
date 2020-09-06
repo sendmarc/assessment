@@ -10,7 +10,6 @@ class TaskFighterRepository {
         return $tasks;
     }
 
-
     public function insert($request){
         DB::insert("insert into tasks set name = '{$request->name}', priority = '{$request->priority}', dueIn = '{$request->dueIn}'");
         return 'created';

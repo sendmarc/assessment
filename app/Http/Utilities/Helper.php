@@ -12,12 +12,14 @@ class Helper {
             $this->priority = 2;
         }
 
-
+        //determine method based on name
         if($this->object->name == 'Get Older'){
             $this->GetOlder();
         }elseif($this->object->name == 'Complete Assessment'){
             $this->CompleteAssessment();
         }
+
+        //final update
         $this->final_check();
         return $this->object;
     }
@@ -28,7 +30,7 @@ class Helper {
     }
 
     public function CompleteAssessment(){
-
+        // condional logic based on period
         if($this->object->dueIn <= 10 && $this->object->dueIn > 5){
             $this->priority = 2;
         }elseif($this->object->dueIn <= 5){
@@ -36,7 +38,6 @@ class Helper {
         }else{
             $this->priority = 1;
         }
-
         $this->object->priority = ($this->object->priority + $this->priority);
     }
 
@@ -57,9 +58,7 @@ class Helper {
         }
     }
 
-
-
-
+    //this is in a helper class so other classes can also take advantage of it
     public function tick($object){
         $this->object = $object;
         if($this->object->name !== 'breath'){

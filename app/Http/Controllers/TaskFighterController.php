@@ -43,6 +43,8 @@ class TaskFighterController extends Controller
 
 
     public function tick(){
+
+        // this is not scalable. ideally we should be doing a single transaction for db update depending on the type of db we have setup
         $tasks = $this->db->selectAll();
         foreach ($tasks as $task) {
             $object = $this->helper->tick($task);
