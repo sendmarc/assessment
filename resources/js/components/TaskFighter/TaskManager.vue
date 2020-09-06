@@ -3,13 +3,14 @@
         <div class="card mt-3">
             <div class="card-body">
                 <h3>Manage Tasks</h3>
+                <button v-on:click="runTicker" class="btn btn-primary">tick</button>
                 <Paginator  v-if="results != null"
                 v-bind:results="results"
                 v-on:get-page="getPage"></Paginator>
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>Name</th>
+                            <th>Task</th>
                             <th>Priority</th>
                             <th>Due In</th>
                             <th>Actions</th>
@@ -22,7 +23,7 @@
                             <td>{{user.dueIn}}</td>
                             <td>
                                 <div class="btn-group">
-                                    <div class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></div>
+                                    <div class="btn btn-sm btn-warning"><i class="fas fa-trash"></i></div>
                                 </div>
                             </td>
                         </tr>
@@ -57,6 +58,11 @@ export default {
     methods: {
         getTasks: function() {
             axios.get('/tasks', {params: this.params}).then(response => {
+                this.results = response;
+            })
+        },
+        runTicker: function(){
+            axios.get('/tick').then(response => {
                 this.results = response;
             })
         },

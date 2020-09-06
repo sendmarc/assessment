@@ -11,17 +11,18 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', 'TaskFighter\TaskFighterController@home');
-
-Route::get('/tasks', 'TaskFighter\TaskFighterController@fetchData');
-
-Route::post('/tasks', 'TaskFighter\TaskFighterController@create');
-
-Route::delete('/tasks/{id}', 'TaskFighter\TaskFighterController@delete');
-
-Route::get('/list/tick', 'TaskFighter\TaskFighterController@tick');
-
 Auth::routes();
+
+Route::get('/', 'TaskFighterController@home');
+
+Route::get('/tasks', 'TaskFighterController@fetchData');
+
+Route::get('/tick', 'TaskFighterController@tick');
+
+Route::post('/tasks', 'TaskFighterController@create');
+
+Route::delete('/tasks/{id}', 'TaskFighterController@delete');
+
+Route::get('/list/tick', 'TaskFighterController@tick');
 
 Route::get('/home', 'HomeController@index')->name('home');
