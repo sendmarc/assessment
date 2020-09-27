@@ -53,11 +53,12 @@ class TaskFighterController extends Controller
             this should then allow us to define task types
             and rulesets. this should also be handled by a messaging que
             to help us better handle the processing of tasks for performance
-
+            TODO:
             In fact if i am being frank we could possibly do all this database side
             if we are using sql we can setup a trigger that listens for the messaging que
             then processes each entry against its ruleset and writes the data to an update table
-            and we simply read from there so in all honestly most of this is not needed but would be a V3 approach
+            and we simply read from there so in all honestly most of this is not needed but would
+            be a V2 approach, mostly as i dont know the best way to demonstrate that with laravel
         */
         $tasks = $this->db->selectAll();
         foreach ($tasks as $task) {
