@@ -11,10 +11,6 @@ import { BootstrapVue, IconsPlugin, ModalPlugin } from 'bootstrap-vue'
 window.Vue = require('vue');
 // Install BootstrapVue
 window.Vue.use(BootstrapVue)
-// Optionally install the BootstrapVue icon components plugin
-window.Vue.use(IconsPlugin)
-window.Vue.use(ModalPlugin)
-
 
 /**
  * The following block of code may be used to automatically register your
