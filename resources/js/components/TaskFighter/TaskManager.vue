@@ -5,12 +5,15 @@
                 <h3>Manage Tasks</h3>
                 <button v-on:click="runTicker" class="btn btn-primary">Tick</button>
                 <b-button @click="modalShow = !modalShow">Create Task</b-button>
+                 <b-button href="/logout" variant="outline-info">
+                <b-icon icon="power" aria-hidden="true"></b-icon> Logout
+                </b-button>
                 <div>
                 <b-modal v-model="modalShow" title="Create Task" hide-footer>
                     <div class="d-block text-center">
-                    <b-form-input v-model="task_name" placeholder="Task Name"></b-form-input>
-                    <b-form-input v-model="task_priority" type="number" placeholder="Priority"></b-form-input>
-                    <b-form-input v-model="task_due" type="number" placeholder="Due In"></b-form-input>
+                    <b-form-input class="mb-2" v-model="task_name" placeholder="Task Name"></b-form-input>
+                    <b-form-input class="mb-2" v-model="task_priority" type="number" placeholder="Priority"></b-form-input>
+                    <b-form-input class="mb-2" v-model="task_due" type="number" placeholder="Due In"></b-form-input>
                     </div>
                     <b-button class="mt-2" variant="outline-primary" block v-on:click="CreateTask">Submit</b-button>
                     <b-button class="mt-3" block v-on:click="hideModal">Close Me</b-button>

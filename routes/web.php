@@ -17,6 +17,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
+
 Route::get('/home', 'TaskFighterController@home')->middleware(['web','auth']);
 
 Route::get('/tasks', 'TaskFighterController@fetchData')->middleware(['web','auth']);
