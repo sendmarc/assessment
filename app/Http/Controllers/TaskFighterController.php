@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Utilities\Helper;
+use Illuminate\Support\Facades\Input;
 use App\Http\Controllers\TaskFighterRepository;
 
 class TaskFighterController extends Controller
@@ -27,18 +28,17 @@ class TaskFighterController extends Controller
     public function fetchData(){
         $data = $this->db->selectAll();
         return $data;
-
     }
 
-    public function create(){
-        //TODO
-        return view('TaskFighter.index');
+    public function create(Request $request){
+        $result = $this->db->insert($request);
+        return response()->json(['results' =>$result]);
     }
 
 
-    public function delete(){
-       //TODO
-       return view('TaskFighter.index');
+    public function delete(Request $request){
+        $result = $this->db->delete($request);
+        return response()->json(['results' =>$result]);
     }
 
 

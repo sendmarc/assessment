@@ -3,7 +3,20 @@
         <div class="card mt-3">
             <div class="card-body">
                 <h3>Manage Tasks</h3>
-                <button v-on:click="runTicker" class="btn btn-primary">tick</button>
+                <button v-on:click="runTicker" class="btn btn-primary">Tick</button>
+                <b-button @click="modalShow = !modalShow">Create Task</b-button>
+                <div>
+                <b-modal v-model="modalShow" title="Create Task" hide-footer>
+                    <div class="d-block text-center">
+                    <b-form-input v-model="task_name" placeholder="Task Name"></b-form-input>
+                    <b-form-input v-model="task_priority" type="number" placeholder="Priority"></b-form-input>
+                    <b-form-input v-model="task_due" type="number" placeholder="Due In"></b-form-input>
+                    </div>
+                    <b-button class="mt-2" variant="outline-primary" block v-on:click="CreateTask">Submit</b-button>
+                    <b-button class="mt-3" block v-on:click="hideModal">Close Me</b-button>
+
+                </b-modal>
+                </div>
                 <Paginator  v-if="results != null"
                 v-bind:results="results"
                 v-on:get-page="getPage"></Paginator>
@@ -23,7 +36,7 @@
                             <td>{{user.dueIn}}</td>
                             <td>
                                 <div class="btn-group">
-                                    <div class="btn btn-sm btn-warning"><i class="fas fa-trash"></i></div>
+                                    <div @click="deleteTask(user.id)" class="btn btn-sm btn-warning"><i class="fas fa-trash"></i></div>
                                 </div>
                             </td>
                         </tr>
@@ -50,9 +63,13 @@ export default {
     data() {
         return{
             results: null,
+            modalShow: false,
             params: {
                 page: 1
-            }
+            },
+            task_priority: '',
+            task_name: '',
+            task_due: ''
         }
     },
     methods: {
@@ -69,7 +86,37 @@ export default {
         getPage: function(event){
             this.params.page = event;
             this.getUsers()
-        }
+        },
+        deleteTask: function(event){
+            let _this = this
+            axios.delete('/tasks/delete/'+event).then(response => {
+                    if(response.data.results){
+                    _this.getTasks()
+                    }else{
+
+                    }
+
+                })
+        },
+        CreateTask: function(event){
+            let _this = this
+            axios.post('/tasks/create',{
+                    name:this.task_name,
+                    dueIn:this.task_due,
+                    priority:this.task_priority
+                }).then(response => {
+                    if(response.data.results){
+                    this.modalShow = false
+                    _this.getTasks()
+                    }else{
+
+                    }
+
+                })
+        },
+        hideModal() {
+            this.modalShow = false
+        },
     }
 }
 </script>

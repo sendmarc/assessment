@@ -11,14 +11,19 @@ class TaskFighterRepository {
     }
 
     public function insert($request){
-        DB::insert("insert into tasks set name = '{$request->name}', priority = '{$request->priority}', dueIn = '{$request->dueIn}'");
-        return 'created';
-
+        if(DB::insert("insert into tasks set name = '{$request->name}', priority = '{$request->priority}', dueIn = '{$request->dueIn}'")){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public function delete($request){
-        DB::delete("delete from tasks where id = '{$request->id}'");
-        return 'deleted';
+        if(DB::delete("delete from tasks where id = '{$request->id}'")){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public function update($request){

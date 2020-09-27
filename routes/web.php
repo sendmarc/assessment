@@ -17,14 +17,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', 'TaskFighterController@home');
+Route::get('/home', 'TaskFighterController@home')->middleware(['web','auth']);
 
-Route::get('/tasks', 'TaskFighterController@fetchData');
+Route::get('/tasks', 'TaskFighterController@fetchData')->middleware(['web','auth']);
 
-Route::get('/tick', 'TaskFighterController@tick');
+Route::get('/tick', 'TaskFighterController@tick')->middleware(['web','auth']);
 
-Route::post('/tasks', 'TaskFighterController@create');
+Route::post('/tasks/create', 'TaskFighterController@create')->middleware(['web','auth']);
 
-Route::delete('/tasks/{id}', 'TaskFighterController@delete');
+Route::delete('/tasks/delete/{id}', 'TaskFighterController@delete')->middleware(['web','auth']);
 
 
