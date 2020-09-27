@@ -69,7 +69,7 @@ class Helper {
     //this is in a helper class so other classes can also take advantage of it
     public function tick($object){
         $this->object = $object;
-        if($this->object->type !== 'breath'){
+        if($this->object->type !== 'Breathe'){
             $this->object = $this->check();
         }
         return $this->object;
