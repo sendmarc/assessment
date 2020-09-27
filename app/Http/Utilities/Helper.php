@@ -15,15 +15,15 @@ class Helper {
     */
 
     private function check(){
-        if($this->object->dueIn <= 0 || $this->object->name !== 'Breathe' || $this->object->name !== 'Get Older'){
+        if($this->object->dueIn <= 0 || $this->object->type !== 'Breathe' || $this->object->type !== 'Get Older'){
             //all priorities increase twice as fast? but breathe doesnt and get older doesnt increase
             $this->priority = 2;
         }
 
         //determine method based on name
-        if($this->object->name == 'Get Older'){
+        if($this->object->type == 'Get Older'){
             $this->GetOlder();
-        }elseif($this->object->name == 'Complete Assessment'){
+        }elseif($this->object->type == 'Complete Assessment'){
             $this->CompleteAssessment();
         }
 
@@ -59,7 +59,7 @@ class Helper {
         }
 
         // finally lets update the dueIn date and insure its never less than 0
-        if($this->object->name !== 'Breathe'){
+        if($this->object->type !== 'Breathe'){
             $this->object->dueIn--;
         }else{
             $this->object->priority = 1000;
@@ -69,7 +69,7 @@ class Helper {
     //this is in a helper class so other classes can also take advantage of it
     public function tick($object){
         $this->object = $object;
-        if($this->object->name !== 'breath'){
+        if($this->object->type !== 'breath'){
             $this->object = $this->check();
         }
         return $this->object;

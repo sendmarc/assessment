@@ -12,6 +12,7 @@
                 <b-modal v-model="modalShow" title="Create Task" hide-footer>
                     <div class="d-block text-center">
                     <b-form-input class="mb-2" v-model="task_name" placeholder="Task Name"></b-form-input>
+                    <b-form-select class="mb-2" v-model="task_type" :options="options"></b-form-select>
                     <b-form-input class="mb-2" v-model="task_priority" type="number" placeholder="Priority"></b-form-input>
                     <b-form-input class="mb-2" v-model="task_due" type="number" placeholder="Due In"></b-form-input>
                     </div>
@@ -27,6 +28,7 @@
                     <thead>
                         <tr>
                             <th>Task</th>
+                            <th>Type</th>
                             <th>Priority</th>
                             <th>Due In</th>
                             <th>Actions</th>
@@ -35,6 +37,7 @@
                     <tbody v-if="results != null">
                         <tr v-for="user in results.data">
                             <td>{{user.name}}</td>
+                            <td>{{user.type}}</td>
                             <td>{{user.priority}}</td>
                             <td>{{user.dueIn}}</td>
                             <td>
@@ -72,7 +75,14 @@ export default {
             },
             task_priority: '',
             task_name: '',
-            task_due: ''
+            task_due: '',
+            task_type: '',
+            options: [
+                { value: null, text: 'Please select an option' },
+                { value: 'Get Older', text: 'Get Older' },
+                { value: 'Breathe', text: 'Breathe' },
+                { value: 'Complete Assessment', text: 'Complete Assessment' },
+                ]
         }
     },
     methods: {
@@ -106,7 +116,8 @@ export default {
             axios.post('/tasks/create',{
                     name:this.task_name,
                     dueIn:this.task_due,
-                    priority:this.task_priority
+                    priority:this.task_priority,
+                    type: this.task_type
                 }).then(response => {
                     if(response.data.results){
                     this.modalShow = false

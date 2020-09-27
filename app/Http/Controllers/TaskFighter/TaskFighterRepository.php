@@ -16,7 +16,7 @@ class TaskFighterRepository {
     }
 
     public function insert($request){
-        if(DB::insert("insert into tasks set name = '{$request->name}', priority = '{$request->priority}', dueIn = '{$request->dueIn}'")){
+        if(DB::insert("insert into tasks set name = '{$request->name}',task = '{$request->task}', priority = '{$request->priority}', dueIn = '{$request->dueIn}'")){
             return true;
         }else{
             return false;
@@ -32,6 +32,6 @@ class TaskFighterRepository {
     }
 
     public function update($request){
-        DB::update("update tasks set priority = '{$request->priority}', dueIn = '{$request->dueIn}' where id = '{$request->id}'");
+        DB::update("update tasks set priority = '{$request->priority}',task = '{$request->task}', dueIn = '{$request->dueIn}' where id = '{$request->id}'");
     }
 }
