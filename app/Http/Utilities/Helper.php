@@ -6,6 +6,14 @@ class Helper {
     public $object;
     public $priority;
 
+    /*
+    This helper class is needlesly complicated
+    this is simply cause i havent had time to learn more about
+    how the elixer orm works to put the rules into a database and write a function to call and process
+    those rules against the messaging que so for now i am leaving this as is. i will make a helper class db
+    to contain that logic if i have the time next
+    */
+
     private function check(){
         if($this->object->dueIn <= 0 || $this->object->name !== 'Breathe' || $this->object->name !== 'Get Older'){
             //all priorities increase twice as fast? but breathe doesnt and get older doesnt increase

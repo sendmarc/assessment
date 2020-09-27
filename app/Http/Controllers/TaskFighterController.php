@@ -5,9 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Utilities\Helper;
-use Illuminate\Support\Facades\Input;
 use App\Http\Controllers\TaskFighterRepository;
 
+/*
+    All core views are placed together
+    ones that need additional behaviour
+    gets that through another function
+*/
 class TaskFighterController extends Controller
 {
 
@@ -27,12 +31,12 @@ class TaskFighterController extends Controller
 
     public function fetchData(){
         $data = $this->db->selectAll();
-        return $data;
+        return response()->json($data);
     }
 
     public function create(Request $request){
         $result = $this->db->insert($request);
-        return response()->json(['results' =>$result]);
+        return response()->json(['results' => $result]);
     }
 
 
@@ -43,8 +47,13 @@ class TaskFighterController extends Controller
 
 
     public function tick(){
-
-        // this is not scalable. ideally we should be doing a single transaction for db update depending on the type of db we have setup
+        /*
+            Not a very scalable solution.
+            Ideally we will store the configuration into a database
+            this should then allow us to define task types
+            and rulesets. this should also be handled by a messaging que
+            to help us better handle the processing of tasks for performance
+        */
         $tasks = $this->db->selectAll();
         foreach ($tasks as $task) {
             $object = $this->helper->tick($task);

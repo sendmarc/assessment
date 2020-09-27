@@ -3,6 +3,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 
+/*
+    All database activity is moved into its own class
+    this is if we decide to change the database
+    we can update the queries in one place
+*/
 class TaskFighterRepository {
 
     public function selectAll(){
