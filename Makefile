@@ -1,4 +1,4 @@
-.PHONY: build-fresh build-site mysql artisan-migrate composer-update npm-install npm-watch composer-command artisan-command  npm-command 
+.PHONY: build-fresh build-site mysql artisan-migrate composer-update npm-install npm-watch run-command 
 
 help:
 	@echo 	"usage: make <target>"
@@ -44,11 +44,5 @@ npm-install:
 npm-watch:
 	docker-compose run --rm npm run watch
 
-composer-command:
-	docker-compose run --rm composer
-
-artisan-command:
-	docker-compose run --rm artisan
-
-npm-command:
-	docker-compose run --rm npm
+run-command:
+	docker-compose run --rm $a
