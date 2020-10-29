@@ -22,6 +22,7 @@ export default function Tasks() {
         }
       </nav>
 
+      <Route exact path='/' component={Listing} />
       <Route exact path="/tasks" component={Listing} />
       <Route exact path="/tasks/add" component={Add} />
       <Route exact path="/tasks/edit/:id" component={Edit} />
