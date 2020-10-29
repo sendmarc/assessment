@@ -1,4 +1,4 @@
-.PHONY: build-fresh build-site mysql artisan-migrate composer-update npm-install npm-watch run-command 
+.PHONY: build-fresh build-site mysql artisan-migrate composer-update npm-install npm-run-dev run-command 
 
 help:
 	@echo 	"usage: make <target>"
@@ -10,11 +10,9 @@ help:
 	@echo 	"	composer-update \n\t -> Setup compposer \n"
 	@echo 	"	npm-install \n\t -> Setup npm packages \n"
 	@echo 	"	npm-watch \n\t -> Run npm dev watch \n"
-	@echo 	"	composer-command \n\t -> Run command in composer container \n"
-	@echo 	"	artisan-command \n\t -> Run command in artisan container \n"
-	@echo 	"	npm-command \n\t -> Run command in npm container \n"
+	@echo 	"	run-command \n\t -> Run command in a specific container eg npm \n"
 
-build-fresh: build-site mysql composer-update artisan-migrate
+build-fresh: build-site mysql composer-update artisan-migrate npm-install npm-run-dev
 
 build-site:
 	@echo "\n###################################"
@@ -41,8 +39,8 @@ npm-install:
 	@echo "---Setting up npm packeges!---"
 	docker-compose run --rm npm install
 
-npm-watch:
-	docker-compose run --rm npm run watch
+npm-run-dev:
+	docker-compose run --rm npm run dev
 
 run-command:
 	docker-compose run --rm $a
