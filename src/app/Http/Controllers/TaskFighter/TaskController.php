@@ -21,6 +21,17 @@ class TaskController extends Controller
         return $tasks;
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $task = Task::find($id);
+        return $task;
+    }
 
     /**
     * Store a newly created resource in storage.
