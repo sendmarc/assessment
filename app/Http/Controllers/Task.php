@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Task as TaskModel;
-use App\TaskFighter;
 
 class Task extends Controller
 {
@@ -48,7 +47,7 @@ class Task extends Controller
     	}
 
     	return response()->json([
-    			"message" => "Task Ticked",
+    			"message" => "Tasks Ticked",
     		], 200);
     }
 }
