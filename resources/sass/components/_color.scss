@@ -1,0 +1,37 @@
+html{
+  body{
+    main{
+      //BACKGROUNDS
+      .bg-blue{
+        background-color:$blue !important;
+      }
+
+      .bg-green{
+        background-color:$green !important;
+      }
+
+      .bg-red{
+        background-color:$red !important;
+      }
+      .bg-light-blue{
+        background-color:$light-blue !important;
+      }
+      .bg-orange{
+        background-color:$orange !important;
+      }
+      .bg-black{
+        background-color:#000 !important;
+      }
+      //COLORS
+      .color-white{
+        color:white !important;
+      }
+      .text-green{
+        color:#0bdd72 !important;
+      }
+      .text-black{
+        color:#000 !important;
+      }
+    }
+  }
+}

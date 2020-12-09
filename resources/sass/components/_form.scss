@@ -1,0 +1,65 @@
+label {
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+form {
+  .form-group {
+    margin-bottom: 2rem;
+  }
+
+  //Hide spinners for number fields
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+  }
+
+  input[type=number] {
+    -moz-appearance: textfield; /* Firefox */
+  }
+}
+
+.is-invalid {
+
+  //Custom validation error styles for the datetime fields
+  &.vdatetime .vdatetime-input {
+    border-color: #e3342f;
+    padding-right: calc(1.6em + 0.75rem);
+  }
+
+  &.file-uploads, &.row, &.card-body, &.input-group, &.form-group, &.custom-flex-item, &.custom-validation {
+    border: 1px solid red;
+  }
+
+  & ~ .invalid-feedback {
+    display: block !important;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 80%;
+    color: #e3342f;
+  }
+}
+
+.section-border-green{
+  border: 1px solid $green;
+  padding: 20px 0 0 0;
+  margin-bottom:20px;
+}
+
+.section-border-red{
+  border: 1px solid $red;
+  padding: 20px 0 0 0;
+  margin-bottom:20px;
+}
+
+.section-border-black{
+  border: 1px solid black;
+  padding: 20px 0 0 0;
+  margin-bottom:20px;
+}
+
+.section-border-grey{
+  border: 1px solid #ced4da;
+}

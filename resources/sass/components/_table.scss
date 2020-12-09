@@ -1,0 +1,19 @@
+.table{
+  thead{
+    th{
+      text-transform:uppercase;
+    }
+  }
+}
+
+.fixed-height {
+  max-height:300px; overflow-y:scroll;
+}
+
+.fixed-head{
+  th{
+    position: sticky;
+    top: 0;
+    background-color:black;
+  }
+}

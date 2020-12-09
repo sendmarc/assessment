@@ -1,0 +1,23 @@
+nav.navbar{
+
+  z-index:999;
+
+  .navbar-brand{
+    img{
+      max-width: 120px;
+    }
+  }
+
+  .navbar-toggler-icon{
+    fill:white;
+  }
+
+  .navbar-nav-right{
+    @include media-breakpoint-down(sm) {
+      display: block;
+      width: 100%;
+      margin: 0;
+      text-align: right;
+    }
+  }
+}

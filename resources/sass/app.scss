@@ -1,1 +1,32 @@
-//
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+// Fontawesome
+@import '~@fortawesome/fontawesome-free/scss/brands';
+@import '~@fortawesome/fontawesome-free/scss/regular';
+@import '~@fortawesome/fontawesome-free/scss/solid';
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+
+// Date Time Plugin
+@import "~vue-datetime/dist/vue-datetime.css";
+
+// Components
+@import 'components/welcome';
+@import 'components/dashboard';
+@import 'components/nav';
+@import 'components/sidebar';
+@import 'components/card';
+@import 'components/form';
+@import 'components/typography';
+@import 'components/button';
+@import 'components/lists';
+@import 'components/table';
+@import 'components/loader';
+@import 'components/color';
+@import 'components/switches';

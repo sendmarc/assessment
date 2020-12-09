@@ -1,0 +1,19 @@
+.welcome{
+  nav.navbar{
+    .navbar-toggler{
+      display:none;
+    }
+    .navbar-nav-right{
+      @include media-breakpoint-down(sm) {
+        display:flex;
+        flex-direction: row;
+        justify-content: space-around;
+      }
+    }
+  }
+  main{
+    @include media-breakpoint-down(sm) {
+      margin-top:100px;
+    }
+  }
+}
