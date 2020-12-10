@@ -29,10 +29,6 @@ form {
     padding-right: calc(1.6em + 0.75rem);
   }
 
-  &.file-uploads, &.row, &.card-body, &.input-group, &.form-group, &.custom-flex-item, &.custom-validation {
-    border: 1px solid red;
-  }
-
   & ~ .invalid-feedback {
     display: block !important;
     width: 100%;
@@ -40,26 +36,4 @@ form {
     font-size: 80%;
     color: #e3342f;
   }
-}
-
-.section-border-green{
-  border: 1px solid $green;
-  padding: 20px 0 0 0;
-  margin-bottom:20px;
-}
-
-.section-border-red{
-  border: 1px solid $red;
-  padding: 20px 0 0 0;
-  margin-bottom:20px;
-}
-
-.section-border-black{
-  border: 1px solid black;
-  padding: 20px 0 0 0;
-  margin-bottom:20px;
-}
-
-.section-border-grey{
-  border: 1px solid #ced4da;
 }

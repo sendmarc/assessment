@@ -54,7 +54,7 @@ class TaskController extends Controller
     }
 
     /**
-     * Run the tick command.
+     * Run the tick command (update).
      *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse

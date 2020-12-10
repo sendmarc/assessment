@@ -50,46 +50,44 @@ class TaskFighter
         $this->dueIn = $due_in;
     }
 
+    /**
+     * Tick method
+     */
     public function tick()
     {
-        if($this->name === 'Breathe'){
-
-        }
-
-        elseif($this->name === 'Get Older'){
-            $this->dueIn--;
-
-            if($this->priority > $this->priorityMin){
-                $this->priority -= $this->priorityIncrement;
-            }
-        }
-
-        elseif($this->name === 'Complete Assessment'){
+        if($this->name !== 'Breathe'){
 
             $this->dueIn--;
 
-            if($this->dueIn >= 0){
+            if($this->name === 'Get Older'){
 
-                if ($this->dueIn <= $this->priorityWarnCheck && $this->dueIn > $this->priorityDangerCheck) {
-                    $this->priority += $this->priorityWarnIncrement;
+                if($this->priority > $this->priorityMin){
+                    $this->priority -= $this->priorityIncrement;
                 }
-                elseif($this->dueIn <= $this->priorityDangerCheck){
-                    $this->priority += $this->priorityDangerIncrement;
+            }
+            elseif($this->name === 'Complete Assessment'){
+
+                if($this->dueIn >= 0){
+
+                    if ($this->dueIn <= $this->priorityWarnCheck && $this->dueIn > $this->priorityDangerCheck) {
+                        $this->priority += $this->priorityWarnIncrement;
+                    }
+                    elseif($this->dueIn <= $this->priorityDangerCheck){
+                        $this->priority += $this->priorityDangerIncrement;
+                    }
+                    else{
+                        $this->priority += $this->priorityIncrement;
+                    }
                 }
                 else{
-                    $this->priority += $this->priorityIncrement;
+                    $this->priority = $this->priorityMin;
                 }
             }
+
             else{
-                $this->priority = $this->priorityMin;
-            }
-        }
-
-        else{
-            $this->dueIn--;
-
-            if($this->priority < $this->priorityMax){
-                $this->priority = $this->dueIn >= 0 ? $this->priority + $this->priorityIncrement : $this->priority + $this->priorityFasterIncrement;
+                if($this->priority < $this->priorityMax){
+                    $this->priority = $this->dueIn >= 0 ? $this->priority + $this->priorityIncrement : $this->priority + $this->priorityFasterIncrement;
+                }
             }
         }
     }
