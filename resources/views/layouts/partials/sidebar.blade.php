@@ -2,7 +2,7 @@
     <div class="sidebar-sticky pt-4">
         <ul class="nav flex-column mb-2 navigation-list">
             <li class="nav-item">
-                <a class="nav-link" href="/tasks">
+                <a class="nav-link" href="/home">
                     <table class="nav-table">
                         <tr>
                             <td valign="top">

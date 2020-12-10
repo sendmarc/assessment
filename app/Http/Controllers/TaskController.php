@@ -10,15 +10,30 @@ use Illuminate\Http\Request;
 class TaskController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display the home page
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function home()
     {
         $title = 'Tasks';
-        $tasks = Task::orderBy('priority', 'desc')->get();
-        return view('tasks.index', compact('title', 'tasks'));
+        return view('tasks.home', compact('title'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function index()
+    {
+        try {
+            $tasks = Task::orderBy('priority', 'desc')->get();
+        } catch (\Exception $e) {
+            report($e);
+            return response()->json(array('code' => 500, 'message' => $e), 500);
+        }
+        return response()->json(array('code' => 200, 'tasks' => $tasks));
     }
 
     /**

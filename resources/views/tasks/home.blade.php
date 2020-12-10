@@ -4,7 +4,7 @@
 
     <div class="py-4 rounded box-shadow">
 
-        <tasks tasks="{{ json_encode($tasks) }}"></tasks>
+        <tasks></tasks>
 
     </div>
 @endsection

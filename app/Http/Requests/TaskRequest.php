@@ -24,7 +24,7 @@ class TaskRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
+            'name' => 'required|unique:tasks',
             'priority' => 'required',
             'dueIn' => 'required'
         ];

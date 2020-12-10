@@ -21,6 +21,8 @@ Route::get('/', 'WelcomeController')->name('welcome');
  * TASKS
  */
 
+Route::get('/home', 'TaskController@home');
+
 Route::get('/tasks', 'TaskController@index');
 Route::post('/tasks', 'TaskController@store');
 Route::delete('/tasks/{task}', 'TaskController@destroy');

@@ -37,7 +37,7 @@
       </table>
     </div>
 
-    <!-- USERS ADD MODAL -->
+    <!-- TASK ADD MODAL -->
     <div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="addTaskModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document" style="max-width:50%;">
         <div class="modal-content">
@@ -113,7 +113,7 @@ export default {
   inheritAttrs: false,
   data: function () {
     return {
-      tasks: JSON.parse(this.$attrs.tasks),
+      tasks: [],
 
       taskToAdd: {
         name: '',
@@ -128,6 +128,19 @@ export default {
     }
   },
   methods: {
+    getTasks() {
+      this.loader(true);
+
+      axios.get('/tasks').then(response => {
+        //Success
+        this.loader(false);
+        this.tasks = response.data.tasks;
+      }).catch(error => {
+        //Fail
+        this.loader(false);
+        alert(JSON.stringify(error.response.data.message));
+      });
+    },
     removeTask(task, index) {
       if (confirm('Are you sure you would like to remove ' + task.name + ' ?')) {
 
@@ -136,8 +149,8 @@ export default {
         axios.delete('/tasks/' + task.id).then(response => {
           //Success
           this.loader(false);
+          this.getTasks();
           alert(response.data.message);
-          location.reload();
         }).catch(error => {
           //Fail
           this.loader(false);
@@ -155,8 +168,9 @@ export default {
       }).then(response => {
         //Success
         this.loader(false);
+        this.getTasks();
+        this.resetTaskAddModal();
         alert(response.data.message);
-        location.reload();
       }).catch(error => {
         //Fail
         this.loader(false);
@@ -174,14 +188,21 @@ export default {
         axios.patch('/tasks/tick').then(response => {
           //Success
           this.loader(false);
+          this.getTasks();
           alert(response.data.message);
-          location.reload();
         }).catch(error => {
           //Fail
           this.loader(false);
           alert(JSON.stringify(error.response.data.message));
         });
       }
+    },
+    resetTaskAddModal(){
+      $('#addTaskModal').modal('hide');
+      this.taskToAdd.name = '';
+      this.taskToAdd.priority = '';
+      this.taskToAdd.dueIn = '';
+      this.taskToAdd.dueDate = '';
     },
     loader(switchOn) {
       if (switchOn) {
@@ -198,10 +219,12 @@ export default {
       return moment().format('YYYY-MM-DD');
     },
   },
-  mounted() {},
+  mounted() {
+    this.getTasks();
+  },
   watch: {
     'taskToAdd.dueDate': function () {
-      if(this.taskToAdd.dueDate !== ''){
+      if (this.taskToAdd.dueDate !== '') {
         let today = moment();
         let dueDate = moment(this.taskToAdd.dueDate);
         this.taskToAdd.dueIn = dueDate.diff(today, 'days') + 1;
