@@ -17,16 +17,25 @@ class TaskFighter
     private $priorityIncrement = 1;
 
     /** @var int */
+    private $priorityFasterIncrement = 2;
+
+    /** @var int */
     private $priorityMax = 100;
 
     /** @var int */
     private $priorityMin = 0;
 
     /** @var int */
-    private $priorityWarn = 10;
+    private $priorityWarnCheck = 10;
 
     /** @var int */
-    private $priorityDanger = 5;
+    private $priorityWarnIncrement = 2;
+
+    /** @var int */
+    private $priorityDangerCheck = 5;
+
+    /** @var int */
+    private $priorityDangerIncrement = 3;
 
     /**
      * TaskFighter constructor.
@@ -43,47 +52,44 @@ class TaskFighter
 
     public function tick()
     {
-        if ($this->name !== 'Get Older') {
-            if ($this->priority < $this->priorityMax) {
-                if ($this->name !== 'Breathe') {
-                    $this->priority = $this->priority + $this->priorityIncrement;
-                }
-            }
-            if ($this->name === 'Complete Assessment') {
-                if ($this->dueIn <= $this->priorityWarn) {
-                    if ($this->priority < $this->priorityMax) {
-                        $this->priority = $this->priority + $this->priorityIncrement;
-                    }
-                }
-                if ($this->dueIn <= $this->priorityDanger) {
-                    if ($this->priority < $this->priorityMax) {
-                        $this->priority = $this->priority + $this->priorityIncrement;
-                    }
-                }
-            }
-        } else {
-            if ($this->priority > $this->priorityMin) {
-                $this->priority = $this->priority - $this->priorityIncrement;
+        if($this->name === 'Breathe'){
+
+        }
+
+        elseif($this->name === 'Get Older'){
+            $this->dueIn--;
+
+            if($this->priority > $this->priorityMin){
+                $this->priority -= $this->priorityIncrement;
             }
         }
-        if ($this->name !== 'Breathe') {
-            $this->dueIn = $this->dueIn - $this->priorityIncrement;
+
+        elseif($this->name === 'Complete Assessment'){
+
+            $this->dueIn--;
+
+            if($this->dueIn >= 0){
+
+                if ($this->dueIn <= $this->priorityWarnCheck && $this->dueIn > $this->priorityDangerCheck) {
+                    $this->priority += $this->priorityWarnIncrement;
+                }
+                elseif($this->dueIn <= $this->priorityDangerCheck){
+                    $this->priority += $this->priorityDangerIncrement;
+                }
+                else{
+                    $this->priority += $this->priorityIncrement;
+                }
+            }
+            else{
+                $this->priority = $this->priorityMin;
+            }
         }
-        if ($this->dueIn < $this->priorityMin) {
-            if ($this->name !== 'Get Older') {
-                if ($this->name !== 'Complete Assessment') {
-                    if ($this->priority < $this->priorityMax) {
-                        if ($this->name != 'Breathe') {
-                            $this->priority = $this->priority + $this->priorityIncrement;
-                        }
-                    }
-                } else {
-                    $this->priority = $this->priority - $this->priority;
-                }
-            } else {
-                if ($this->priority > $this->priorityMin) {
-                    $this->priority = $this->priority - $this->priorityIncrement;
-                }
+
+        else{
+            $this->dueIn--;
+
+            if($this->priority < $this->priorityMax){
+                $this->priority = $this->dueIn >= 0 ? $this->priority + $this->priorityIncrement : $this->priority + $this->priorityFasterIncrement;
             }
         }
     }

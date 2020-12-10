@@ -15,23 +15,6 @@ class TaskFighterGetOlderTest extends TestCase
     /**
      * @return void
      */
-    public function test_getOlder_oncePastDueDatePriorityIncreasesDouble()
-    {
-        $task = factory(Task::class)->make([
-            'name' => 'Get Older',
-            'priority' => 100,
-            'dueIn' => -1,
-        ]);
-
-        $taskFighter = new TaskFighter($task->name, $task->priority, $task->dueIn);
-        $taskFighter->tick();
-
-        $this->assertTrue($taskFighter->priority === 98);
-    }
-
-    /**
-     * @return void
-     */
     public function test_getOlder_priorityNeverNegative()
     {
         $task = factory(Task::class)->make([
