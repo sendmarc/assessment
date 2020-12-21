@@ -55,40 +55,62 @@ class TaskFighter
      */
     public function tick()
     {
-        if($this->name !== 'Breathe'){
+        switch ($this->name) {
+            case 'Breathe':
+                break;
+            case 'Get Older':
+                $this->getOlder();
+                break;
+            case 'Complete Assessment':
+                $this->completeAssessment();
+                break;
+            default:
+                $this->all();
+        }
+    }
 
-            $this->dueIn--;
+    /**
+     * For "Get Older" tasks
+     */
+    private function getOlder()
+    {
+        $this->dueIn--;
 
-            if($this->name === 'Get Older'){
+        if ($this->priority > $this->priorityMin) {
+            $this->priority -= $this->priorityIncrement;
+        }
+    }
 
-                if($this->priority > $this->priorityMin){
-                    $this->priority -= $this->priorityIncrement;
-                }
+    /**
+     * For "Complete Assessment" tasks
+     */
+    private function completeAssessment()
+    {
+        $this->dueIn--;
+
+        if ($this->dueIn >= 0) {
+
+            if ($this->dueIn <= $this->priorityWarnCheck && $this->dueIn > $this->priorityDangerCheck) {
+                $this->priority += $this->priorityWarnIncrement;
+            } elseif ($this->dueIn <= $this->priorityDangerCheck) {
+                $this->priority += $this->priorityDangerIncrement;
+            } else {
+                $this->priority += $this->priorityIncrement;
             }
-            elseif($this->name === 'Complete Assessment'){
+        } else {
+            $this->priority = $this->priorityMin;
+        }
+    }
 
-                if($this->dueIn >= 0){
+    /**
+     * For all other tasks
+     */
+    private function all()
+    {
+        $this->dueIn--;
 
-                    if ($this->dueIn <= $this->priorityWarnCheck && $this->dueIn > $this->priorityDangerCheck) {
-                        $this->priority += $this->priorityWarnIncrement;
-                    }
-                    elseif($this->dueIn <= $this->priorityDangerCheck){
-                        $this->priority += $this->priorityDangerIncrement;
-                    }
-                    else{
-                        $this->priority += $this->priorityIncrement;
-                    }
-                }
-                else{
-                    $this->priority = $this->priorityMin;
-                }
-            }
-
-            else{
-                if($this->priority < $this->priorityMax){
-                    $this->priority = $this->dueIn >= 0 ? $this->priority + $this->priorityIncrement : $this->priority + $this->priorityFasterIncrement;
-                }
-            }
+        if ($this->priority < $this->priorityMax) {
+            $this->priority = $this->dueIn >= 0 ? $this->priority + $this->priorityIncrement : $this->priority + $this->priorityFasterIncrement;
         }
     }
 }
